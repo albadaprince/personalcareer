@@ -12,8 +12,8 @@ const firebaseConfig = {
   projectId: "private-4102b",
   storageBucket: "private-4102b.firebasestorage.app",
   messagingSenderId: "668082070392",
-  appId: "1:668082070392:web:ede2ee1f4fe005f19a1e8d",
-  measurementId: "G-8CQX01GV1C"
+  appId: "1:668082070392:web:b92407e68dbe825d9a1e8d",
+  measurementId: "G-6JSX3ELN7Y"
 };
 
 // Initialize Firebase
