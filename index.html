@@ -3,130 +3,107 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Career Gates — 2026/27 Campaign</title>
+<title>Career Gates</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0E1A2B; --slate:#1B2A3F; --slate2:#25374F;
-  --paper:#F5F6F4; --paperdim:#E4E7E4;
-  --amber:#E8A33D; --teal:#2E8B8B; --rose:#C4553B;
-  --muted:#7A8899; --line:#33455E;
-  --disp:'Space Grotesk',system-ui,sans-serif;
-  --body:'IBM Plex Sans',system-ui,sans-serif;
-  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --ink:#0E1A2B;--slate:#1B2A3F;--slate2:#25374F;--paper:#F5F6F4;
+  --amber:#E8A33D;--teal:#2E8B8B;--rose:#C4553B;--muted:#7A8899;--line:#33455E;
+  --disp:'Space Grotesk',system-ui,sans-serif;--body:'IBM Plex Sans',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;
 }
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  background:var(--ink); color:var(--paper);
-  font-family:var(--body); font-size:15px; line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-}
-a{color:var(--amber)}
-:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--amber)}:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 .wrap{max-width:1240px;margin:0 auto;padding:0 20px}
 
-/* ---------- masthead ---------- */
-header.mast{border-bottom:1px solid var(--line);padding:26px 0 20px}
+/* sync bar */
+.syncbar{background:var(--slate2);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px}
+.syncbar .wrap{display:flex;align-items:center;gap:12px;padding:8px 20px;flex-wrap:wrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex:none}
+.dot.ok{background:var(--teal);box-shadow:0 0 0 3px rgba(46,139,139,.2)}
+.dot.warn{background:var(--amber)}
+.dot.off{background:var(--rose)}
+.syncbar .who{color:var(--paper)}
+.syncbar .spacer{flex:1}
+.mini{background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:3px;cursor:pointer}
+.mini:hover{color:var(--paper);border-color:var(--muted)}
+.mini.pri{color:var(--amber);border-color:var(--amber)}
+
+header.mast{border-bottom:1px solid var(--line);padding:24px 0 18px}
 .mast-in{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-h1{
-  font-family:var(--disp); font-weight:700; font-size:clamp(24px,3.4vw,38px);
-  letter-spacing:-.02em; margin:0; line-height:1.05;
-}
+h1{font-family:var(--disp);font-weight:700;font-size:clamp(24px,3.4vw,38px);letter-spacing:-.02em;margin:0;line-height:1.05}
 h1 span{color:var(--amber)}
 .sub{color:var(--muted);font-size:13px;margin-top:6px;max-width:56ch}
 .clock{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;white-space:nowrap}
-.clock b{display:block;color:var(--paper);font-size:15px;font-weight:500;letter-spacing:.02em}
+.clock b{display:block;color:var(--paper);font-size:15px;font-weight:500}
 
-/* ---------- gate board (signature) ---------- */
 .board{padding:22px 0 4px}
-.board-lbl{
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:10px
-}
+.board-lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:10px}
 .board-lbl::after{content:"";flex:1;height:1px;background:var(--line)}
 .gates{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.gate{background:var(--slate);padding:16px 16px 14px;position:relative;min-height:132px;display:flex;flex-direction:column}
-.gate.oneshot{background:linear-gradient(180deg,#2A2233 0%,var(--slate) 60%)}
-.gate-name{font-family:var(--disp);font-weight:500;font-size:14px;line-height:1.25;margin-bottom:2px}
-.gate-when{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.03em}
+.gate{background:var(--slate);padding:16px;position:relative;min-height:132px;display:flex;flex-direction:column}
+.gate.oneshot{background:linear-gradient(180deg,#2A2233 0,var(--slate) 60%)}
+.gate-name{font-family:var(--disp);font-weight:500;font-size:14px;line-height:1.25}
+.gate-when{font-family:var(--mono);font-size:10.5px;color:var(--muted)}
 .gate-count{margin-top:auto;display:flex;align-items:baseline;gap:7px}
 .gate-num{font-family:var(--mono);font-weight:600;font-size:38px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .gate-unit{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
-.gate .tag{
-  position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:9px;
-  letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;border:1px solid currentColor;border-radius:2px
-}
-.t-amber{color:var(--amber)} .t-rose{color:var(--rose)} .t-teal{color:var(--teal)} .t-mute{color:var(--muted)}
-.gate.closed .gate-num,.gate.closed .gate-name{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+.gate .tag{position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:2px 6px;border:1px solid currentColor;border-radius:2px}
+.t-amber{color:var(--amber)}.t-rose{color:var(--rose)}.t-teal{color:var(--teal)}.t-mute{color:var(--muted)}
+.gate.closed .gate-num,.gate.closed .gate-name{color:var(--muted);text-decoration:line-through}
 
-/* ---------- tabs ---------- */
-nav.tabs{display:flex;gap:2px;margin:26px 0 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
-nav.tabs button{
-  background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);
-  font-family:var(--disp);font-size:13.5px;font-weight:500;letter-spacing:.01em;
-  padding:11px 15px;cursor:pointer;white-space:nowrap
-}
+nav.tabs{display:flex;gap:2px;margin:26px 0 0;border-bottom:1px solid var(--line);overflow-x:auto}
+nav.tabs button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font-family:var(--disp);font-size:13.5px;font-weight:500;padding:11px 15px;cursor:pointer;white-space:nowrap}
 nav.tabs button:hover{color:var(--paper)}
-nav.tabs button[aria-selected="true"]{color:var(--paper);border-bottom-color:var(--amber)}
+nav.tabs button[aria-selected=true]{color:var(--paper);border-bottom-color:var(--amber)}
 nav.tabs .cnt{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:6px}
 
-/* ---------- toolbar ---------- */
 .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:18px 0 4px}
-input[type=search],select{
-  background:var(--slate);border:1px solid var(--line);color:var(--paper);
-  font-family:var(--body);font-size:13px;padding:7px 10px;border-radius:3px
-}
-input[type=search]{min-width:210px}
-.spacer{flex:1}
-button.act{
-  background:transparent;border:1px solid var(--line);color:var(--muted);
-  font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
-  padding:7px 12px;border-radius:3px;cursor:pointer
-}
+input[type=search],select,input[type=text],input[type=email],input[type=date],input[type=password],input[type=url]{
+  background:var(--slate);border:1px solid var(--line);color:var(--paper);font-family:var(--body);font-size:13px;padding:7px 10px;border-radius:3px}
+input[type=search]{min-width:200px}.spacer{flex:1}
+button.act{background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px;border-radius:3px;cursor:pointer}
 button.act:hover{color:var(--paper);border-color:var(--muted)}
 button.act.warn:hover{color:var(--rose);border-color:var(--rose)}
+button.act.go{color:var(--amber);border-color:var(--amber)}
 
-/* ---------- cards ---------- */
-.panel{display:none;padding:8px 0 60px}
-.panel.on{display:block}
-.card{
-  background:var(--slate);border:1px solid var(--line);border-left:3px solid var(--muted);
-  border-radius:3px;padding:15px 17px;margin-bottom:9px
-}
-.card.p1{border-left-color:var(--rose)}
-.card.p2{border-left-color:var(--amber)}
-.card.p3{border-left-color:var(--line)}
-.card.done{opacity:.5}
+.panel{display:none;padding:8px 0 60px}.panel.on{display:block}
+.card{background:var(--slate);border:1px solid var(--line);border-left:3px solid var(--muted);border-radius:3px;padding:15px 17px;margin-bottom:9px}
+.card.p1{border-left-color:var(--rose)}.card.p2{border-left-color:var(--amber)}.card.p3{border-left-color:var(--line)}
+.card.done{opacity:.45}
 .c-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.c-title{font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:-.01em;margin:0}
+.c-title{font-family:var(--disp);font-weight:700;font-size:16px;margin:0}
 .c-role{color:var(--muted);font-size:13px;margin-top:1px}
-.c-meta{display:flex;gap:14px;flex-wrap:wrap;margin:9px 0 0;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.c-meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:9px;font-family:var(--mono);font-size:11px;color:var(--muted)}
 .c-meta b{color:var(--paper);font-weight:500}
-.c-body{font-size:13.5px;color:#C9D2DC;margin:10px 0 0}
-.c-body strong{color:var(--paper)}
+.c-body{font-size:13.5px;color:#C9D2DC;margin-top:10px}.c-body strong{color:var(--paper)}
 .c-elig{font-size:12.5px;color:var(--muted);margin-top:7px;font-style:italic}
 .scores{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
 .score{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);padding:2px 6px;border-radius:2px}
 .score i{font-style:normal;color:var(--paper);font-weight:600}
 .c-ctl{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
 .c-ctl select{font-size:12px;padding:5px 8px}
-.c-ctl textarea{
-  flex:1;min-width:220px;background:var(--ink);border:1px solid var(--line);color:var(--paper);
-  font-family:var(--body);font-size:12.5px;padding:6px 9px;border-radius:3px;resize:vertical;min-height:34px
-}
+.chk{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+.chk input{accent-color:var(--teal);width:15px;height:15px}
+details.more{margin-top:11px;border-top:1px dashed var(--line);padding-top:10px}
+details.more summary{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);cursor:pointer;list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::before{content:"+ ";color:var(--amber)}
+details.more[open] summary::before{content:"– "}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin-top:11px}
+.f label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.f input{width:100%}
+.fw{grid-column:1/-1}
+.fw textarea{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--paper);font-family:var(--body);font-size:13px;padding:8px 10px;border-radius:3px;resize:vertical;min-height:70px}
 .days{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:2px;white-space:nowrap;border:1px solid currentColor}
-.d-now{color:var(--rose)} .d-soon{color:var(--amber)} .d-far{color:var(--muted)} .d-past{color:var(--line)}
+.d-now{color:var(--rose)}.d-soon{color:var(--amber)}.d-far{color:var(--muted)}.d-past{color:var(--line)}
+.edited{font-family:var(--mono);font-size:9px;color:var(--teal);letter-spacing:.08em;text-transform:uppercase}
 
-/* ---------- timeline ---------- */
-.tl{border-left:1px solid var(--line);margin-left:8px;padding-left:0}
+.tl{border-left:1px solid var(--line);margin-left:8px}
 .tl-item{position:relative;padding:0 0 4px 26px;margin-bottom:14px}
-.tl-item::before{
-  content:"";position:absolute;left:-4.5px;top:9px;width:8px;height:8px;border-radius:50%;
-  background:var(--slate);border:1.5px solid var(--muted)
-}
+.tl-item::before{content:"";position:absolute;left:-4.5px;top:9px;width:8px;height:8px;border-radius:50%;background:var(--slate);border:1.5px solid var(--muted)}
 .tl-item.now::before{background:var(--amber);border-color:var(--amber);box-shadow:0 0 0 4px rgba(232,163,61,.16)}
 .tl-item.past::before{background:var(--line);border-color:var(--line)}
 .tl-mo{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:4px}
@@ -134,45 +111,45 @@ button.act.warn:hover{color:var(--rose);border-color:var(--rose)}
 .tl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:7px}
 .tl-cell{background:var(--slate);padding:11px 12px}
 .tl-k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.tl-v{font-size:12.5px;color:#C9D2DC;line-height:1.5}
+.tl-v{font-size:12.5px;color:#C9D2DC}
 
-/* ---------- table-ish rows ---------- */
 .rt{width:100%;border-collapse:collapse;font-size:13px}
-.rt th{
-  text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);font-weight:400;padding:8px 10px;border-bottom:1px solid var(--line)
-}
+.rt th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;padding:8px 10px;border-bottom:1px solid var(--line)}
 .rt td{padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top;color:#C9D2DC}
 .rt td:first-child{color:var(--paper);font-weight:500;font-family:var(--disp)}
-.rt tr.good td{background:rgba(46,139,139,.08)}
-.rt tr.bad td{background:rgba(196,85,59,.09)}
+.rt tr.good td{background:rgba(46,139,139,.08)}.rt tr.bad td{background:rgba(196,85,59,.09)}
 
-.note{
-  background:var(--slate2);border:1px solid var(--line);border-radius:3px;
-  padding:13px 15px;font-size:13px;color:#C9D2DC;margin:0 0 18px
-}
+.note{background:var(--slate2);border:1px solid var(--line);border-radius:3px;padding:13px 15px;font-size:13px;color:#C9D2DC;margin-bottom:18px}
 .note b{color:var(--amber);font-family:var(--disp)}
+.note.alert{border-color:var(--rose)}.note.alert b{color:var(--rose)}
 footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);font-size:11.5px;font-family:var(--mono)}
-.toast{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--amber);color:var(--ink);
-  font-family:var(--mono);font-size:12px;padding:9px 18px;border-radius:3px;opacity:0;pointer-events:none;
-  transition:opacity .25s;z-index:50;font-weight:500
-}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--amber);color:var(--ink);font-family:var(--mono);font-size:12px;padding:9px 18px;border-radius:3px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:60;font-weight:500}
 .toast.on{opacity:1}
-
-@media(max-width:900px){
-  .gates{grid-template-columns:repeat(2,1fr)}
-  .tl-grid{grid-template-columns:1fr}
-  .rt{display:block;overflow-x:auto;white-space:normal}
-}
-@media(max-width:560px){
-  .gates{grid-template-columns:1fr}
-  .clock{text-align:left}
-}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+dialog{background:var(--slate);color:var(--paper);border:1px solid var(--line);border-radius:4px;padding:0;max-width:440px;width:92%}
+dialog::backdrop{background:rgba(6,12,20,.72)}
+.dlg{padding:20px 22px}
+.dlg h2{font-family:var(--disp);font-size:19px;margin:0 0 4px}
+.dlg p{font-size:13px;color:var(--muted);margin:0 0 16px}
+.dlg .f{margin-bottom:9px}
+.dlg .row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.err{color:var(--rose);font-size:12px;font-family:var(--mono);margin-top:9px;display:none}
+.err.on{display:block}
+@media(max-width:900px){.gates{grid-template-columns:repeat(2,1fr)}.tl-grid{grid-template-columns:1fr}.rt{display:block;overflow-x:auto}}
+@media(max-width:560px){.gates{grid-template-columns:1fr}.clock{text-align:left}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+
+<div class="syncbar"><div class="wrap">
+  <span class="dot" id="dot"></span>
+  <span id="syncTxt">Starting…</span>
+  <span class="who" id="who"></span>
+  <span class="spacer"></span>
+  <button class="mini pri" id="btnAuth" hidden>Sign in to sync</button>
+  <button class="mini" id="btnOut" hidden>Sign out</button>
+  <button class="mini" id="btnHelp">Setup</button>
+</div></div>
 
 <header class="mast"><div class="wrap"><div class="mast-in">
   <div>
@@ -183,7 +160,6 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);f
 </div></div></header>
 
 <div class="wrap">
-
   <section class="board">
     <div class="board-lbl">Hard gates</div>
     <div class="gates" id="gates"></div>
@@ -192,14 +168,13 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);f
   <nav class="tabs" role="tablist" id="tabs"></nav>
 
   <div class="tools" id="tools">
-    <input type="search" id="q" placeholder="Search institutions, roles, notes…" aria-label="Search">
-    <select id="fpri" aria-label="Filter priority">
-      <option value="">All priorities</option><option value="1">Priority 1</option>
-      <option value="2">Priority 2</option><option value="3">Priority 3</option>
-    </select>
+    <input type="search" id="q" placeholder="Search anything…" aria-label="Search">
+    <select id="fpri" aria-label="Filter priority"><option value="">All priorities</option><option value="1">Priority 1</option><option value="2">Priority 2</option><option value="3">Priority 3</option></select>
     <select id="fst" aria-label="Filter status"><option value="">All statuses</option></select>
+    <label class="chk"><input type="checkbox" id="fhide"> Hide done</label>
     <span class="spacer"></span>
-    <button class="act" id="exp">Export backup</button>
+    <button class="act go" id="btnAdd">+ Add</button>
+    <button class="act" id="exp">Export</button>
     <button class="act" id="impBtn">Import</button>
     <input type="file" id="imp" accept="application/json" hidden>
     <button class="act warn" id="rst">Reset</button>
@@ -210,128 +185,145 @@ footer{border-top:1px solid var(--line);padding:18px 0 40px;color:var(--muted);f
   <div class="panel" id="p-gaps"></div>
   <div class="panel" id="p-phd"></div>
   <div class="panel" id="p-net"></div>
-
 </div>
 
-<footer><div class="wrap">
-  Saved in this browser only (localStorage). Export a backup before clearing site data or switching machines.
-</div></footer>
+<footer><div class="wrap"><span id="footNote"></span></div></footer>
 <div class="toast" id="toast"></div>
 
+<dialog id="dlgAuth"><div class="dlg">
+  <h2>Sign in</h2>
+  <p>Your tracker syncs to your own Firebase project. Nobody else can read it.</p>
+  <div class="row"><button class="act go" id="gGoogle" style="flex:1">Continue with Google</button></div>
+  <p style="margin:16px 0 8px;text-align:center">or use email</p>
+  <div class="f"><label>Email</label><input type="email" id="aEmail" autocomplete="username"></div>
+  <div class="f"><label>Password</label><input type="password" id="aPass" autocomplete="current-password"></div>
+  <div class="err" id="aErr"></div>
+  <div class="row">
+    <button class="act go" id="gIn">Sign in</button>
+    <button class="act" id="gUp">Create account</button>
+    <span class="spacer"></span>
+    <button class="act" id="gClose">Close</button>
+  </div>
+</div></dialog>
+
+<dialog id="dlgAdd"><div class="dlg">
+  <h2>Add an opportunity</h2>
+  <p>Anything you find that isn't already on the list.</p>
+  <div class="f"><label>Institution</label><input type="text" id="nInst"></div>
+  <div class="f"><label>Role or programme</label><input type="text" id="nRole"></div>
+  <div class="f"><label>Location</label><input type="text" id="nLoc"></div>
+  <div class="f"><label>Deadline</label><input type="date" id="nDate"></div>
+  <div class="f"><label>Priority</label><select id="nPri"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></div>
+  <div class="row"><button class="act go" id="nSave">Add</button><span class="spacer"></span><button class="act" id="nClose">Cancel</button></div>
+</div></dialog>
+
+<dialog id="dlgHelp"><div class="dlg">
+  <h2>Connecting Firebase</h2>
+  <p>Right now this page is running in <b id="modeName">local</b> mode.</p>
+  <div style="font-size:13px;color:#C9D2DC;line-height:1.6">
+    <p style="color:#C9D2DC">To sync across devices, create a free Firebase project, enable <b>Firestore</b> and <b>Authentication</b>, then copy your web config into <code>firebase-config.js</code> beside this file. Full steps are in the README.</p>
+    <p style="color:#C9D2DC"><b>Firebase needs a real server.</b> Opening this file directly from your hard drive (<code>file://</code>) blocks the module loader, so it will always fall back to local mode. Use GitHub Pages, Netlify, or run <code>python3 -m http.server</code> in the folder.</p>
+  </div>
+  <div class="row"><span class="spacer"></span><button class="act" id="hClose">Close</button></div>
+</div></dialog>
+
+<script src="firebase-config.js" onerror="window.__noCfg=1"></script>
 <script>
-/* ============================ DATA ============================ */
+/* ==================== SEED DATA ==================== */
 const OPPS=[
 {id:"wbypp",pri:1,inst:"World Bank Group",role:"Young Professionals Program",loc:"Washington DC",cat:"MDB",win:"1–30 Sep 2026",date:"2026-09-30",
- elig:"Eligible. Master's completed before the September start; 2+ yrs full-time post-undergrad, and internships may count.",
- pay:5,pres:5,fit:5,phd:3,
- prep:"CV max 2 pages. 250-word stream statement plus two 400-word essays. Passport, transcripts or enrolment letter. <strong>Stream: Prosperity — Finance, Competitiveness & Innovation.</strong> Alternates: Institutions; Digital Transformation. <strong>Their terms prohibit AI assistance and outside help — write every word yourself.</strong>",
+ elig:"Eligible. Master's completed before the September start; 2+ yrs full-time post-undergrad, and internships may count.",pay:5,pres:5,fit:5,phd:3,
+ prep:"CV max 2 pages. 250-word stream statement plus two 400-word essays. Passport, transcripts or enrolment letter. <strong>Stream: Prosperity — Finance, Competitiveness &amp; Innovation.</strong> Alternates: Institutions; Digital Transformation. <strong>Their terms prohibit AI assistance and outside help — write every word yourself.</strong>",
  src:"worldbank.org → careers → talent programs"},
 {id:"imfrap",pri:1,inst:"IMF",role:"Research Analyst Program (RAP)",loc:"Washington DC",cat:"IFI",win:"Autumn 2026 — verify",date:"2026-11-01",
- elig:"Likely. GPA 3.5+ requirement met. Risk: your bachelor's is International Relations, not a listed quantitative field.",
- pay:4,pres:5,fit:4,phd:5,
+ elig:"Likely. GPA 3.5+ met. Risk: your bachelor's is International Relations, not a listed quantitative field.",pay:4,pres:5,fit:4,phd:5,
  prep:"Two-year contract, explicitly framed as experience before graduate study. Hired on a wide geographical basis, so they relocate you. <strong>Lead with methods — DiD, PSM, IPWRA, high-dimensional fixed effects — not the degree label.</strong>",
  src:"imf.wd5.myworkdayjobs.com"},
 {id:"predoc",pri:1,inst:"US / UK universities",role:"Pre-doctoral RA (NBER, faculty-led)",loc:"Various",cat:"Pre-doc",win:"Rolling, peaks Oct–Feb",date:"2026-10-01",
- elig:"Strong on research output. Weak on formal math coursework — see Gaps.",
- pay:3,pres:4,fit:5,phd:5,
+ elig:"Strong on research output. Weak on formal math coursework — see Gaps.",pay:3,pres:4,fit:5,phd:5,
  prep:"Best PhD conversion rate of anything here, and the most reliable source of the <strong>academic reference letters you currently lack</strong>. Check PREDOC.org, EconJobMarket and NBER listings weekly.",
  src:"predoc.org · econjobmarket.org"},
 {id:"bipcpm",pri:1,inst:"Bank Indonesia",role:"PCPM 2027",loc:"Jakarta",cat:"Central bank",win:"Aug–Sep 2027",date:"2027-08-01",oneshot:true,
- elig:"Eligible — you turn 27 in Aug 2027 and the S2 cap is 28. This is your last cycle.",
- pay:4,pres:4,fit:4,phd:3,
+ elig:"Eligible — you turn 27 in Aug 2027 and the S2 cap is 28. This is your last cycle.",pay:4,pres:4,fit:4,phd:3,
  prep:"Requires <strong>penyetaraan ijazah and GPA conversion from Ditjen Diktiristek</strong> — start the week you graduate, it takes months. Minimum GPA 3.00. Carries an <em>ikatan dinas</em> service bond; read the terms and check the PhD sponsorship policy before signing.",
  src:"pcpmbi.rekrutmenbi.id"},
 {id:"aiib",pri:2,inst:"AIIB",role:"Graduate Program (2-year rotational)",loc:"Beijing",cat:"MDB",win:"Jan–Feb 2027",date:"2027-01-31",
- elig:"Eligible. Master's plus 1–2 years relevant experience.",
- pay:5,pres:4,fit:2,phd:2,
+ elig:"Eligible. Master's plus 1–2 years relevant experience.",pay:5,pres:4,fit:2,phd:2,
  prep:"Full staff position, not a contract. USD salary, diplomatic visa, global medical insurance, location premium on top of base, relocation support plus airfare, retirement package, education subsidy. <strong>Streams are investment, finance, risk and strategy — not research.</strong> Buys income and status, not a research career.",
  src:"aiib.org → work with us → young talent"},
 {id:"eria",pri:2,inst:"ERIA",role:"Research Associate (target E-DISC)",loc:"Jakarta",cat:"Think tank / IO",win:"Rolling — apply Jan–Feb 2027",date:"2027-01-15",
- elig:"Eligible. Master's in economics or a related field.",
- pay:2,pres:4,fit:5,phd:3,
+ elig:"Eligible. Master's in economics or a related field.",pay:2,pres:4,fit:5,phd:3,
  prep:"Email recruit@eria.org with subject exactly <em>Application for Research Associate — Economics</em>. Send resume, a <strong>one-page policy-relevant study interest statement</strong>, publication list and a sample paper. Send the AI-and-firms paper for E-DISC, not the cooperative finance one. Local hire terms.",
  src:"eria.org → career opportunities"},
 {id:"adbi",pri:2,inst:"ADBI",role:"Research Associate",loc:"Tokyo",cat:"Think tank / MDB",win:"Cycles ~Jan and ~Jul",date:"2027-01-20",
- elig:"Qualified on paper. Blocker: must already reside in Japan with valid work permission.",
- pay:2,pres:5,fit:5,phd:4,
- prep:"Independent contractor, <strong>not staff</strong>. Two-year hard maximum, no social insurance. Resolve your visa status first. Warm contacts: Dr Rachita Gulati (your former supervisor) and Nilaphy Phommachanh (current RA).",
+ elig:"Qualified on paper. Blocker: must already reside in Japan with valid work permission.",pay:2,pres:5,fit:5,phd:4,
+ prep:"Independent contractor, <strong>not staff</strong>. Two-year hard maximum, no social insurance. Resolve your visa status first. Warm contacts: Dr Rachita Gulati and Nilaphy Phommachanh.",
  src:"adb.org/adbi/about/opportunities"},
 {id:"adbypp",pri:2,inst:"Asian Development Bank",role:"Young Professionals Program",loc:"Manila",cat:"MDB",win:"~Oct 2027",date:"2027-10-01",
- elig:"Borderline — needs 3+ years professional experience; age cap 32.",
- pay:5,pres:5,fit:4,phd:3,
+ elig:"Borderline — needs 3+ years professional experience; age cap 32.",pay:5,pres:5,fit:4,phd:3,
  prep:"Count internships explicitly toward the three-year requirement. Apply even when borderline — it costs nothing but time.",src:"adb.org/careers"},
 {id:"econcon",pri:2,inst:"Economic consulting",role:"Analyst — Frontier, NERA, Compass Lexecon",loc:"London / Brussels / Sydney",cat:"Consulting",win:"Autumn graduate cycle",date:"2026-10-15",
- elig:"Eligible. Causal inference skills map directly onto the work.",
- pay:4,pres:3,fit:4,phd:3,
+ elig:"Eligible. Causal inference skills map directly onto the work.",pay:4,pres:3,fit:4,phd:3,
  prep:"Pays well, uses your exact toolkit, visa sponsorship is routine. Weaker development prestige and a moderate PhD signal.",src:"Company career pages"},
 {id:"oecd",pri:3,inst:"OECD",role:"Young Associates Programme",loc:"Paris",cat:"IO",win:"Verify cycle",date:"2027-02-01",
- elig:"Verify — aimed at recent bachelor's and master's graduates; rules have changed between years.",
- pay:3,pres:4,fit:4,phd:4,prep:"Explicitly positioned as a pre-PhD programme.",src:"oecd.org → careers"},
+ elig:"Verify — aimed at recent graduates; rules have changed between years.",pay:3,pres:4,fit:4,phd:4,
+ prep:"Explicitly positioned as a pre-PhD programme.",src:"oecd.org → careers"},
 {id:"wider",pri:3,inst:"UNU-WIDER",role:"Research and programme roles",loc:"Helsinki",cat:"IO research",win:"Rolling",date:"2027-03-01",
- elig:"Possible. A development economics research institute.",
- pay:3,pres:4,fit:5,phd:4,prep:"GSID alumna Vu Hong Nhung (DID 2017) works here — a warm route in.",src:"wider.unu.edu"},
+ elig:"Possible. A development economics research institute.",pay:3,pres:4,fit:5,phd:4,
+ prep:"GSID alumna Vu Hong Nhung (DID 2017) works here — a warm route in.",src:"wider.unu.edu"},
 {id:"wbjkt",pri:3,inst:"World Bank Jakarta",role:"Extended / Short Term Consultant",loc:"Jakarta",cat:"MDB",win:"Rolling",date:"2027-04-01",
- elig:"Eligible. STC and ETC roles are master's-level.",
- pay:3,pres:5,fit:4,phd:4,
+ elig:"Eligible. STC and ETC roles are master's-level.",pay:3,pres:5,fit:4,phd:4,
  prep:"USD-linked pay against Jakarta cost of living. No benefits or stability, but it keeps the World Bank relationship live while you build a stronger YPP case.",src:"worldbank.org/careers"},
 {id:"prospera",pri:3,inst:"Prospera",role:"Economist / analyst",loc:"Jakarta",cat:"Donor programme",win:"Rolling",date:"2027-04-01",
- elig:"Eligible.",pay:4,pres:3,fit:4,phd:3,
- prep:"Australia–Indonesia economic partnership. Pays well above local think tanks.",src:"prospera.or.id"},
+ elig:"Eligible.",pay:4,pres:3,fit:4,phd:3,prep:"Australia–Indonesia economic partnership. Pays well above local think tanks.",src:"prospera.or.id"},
 {id:"isdb",pri:3,inst:"Islamic Development Bank",role:"Young Professionals Program",loc:"Jeddah",cat:"MDB",win:"Annual — verify",date:"2027-03-01",
- elig:"Verify age and experience rules. Indonesia is a major member country.",
- pay:4,pres:3,fit:3,phd:2,prep:"Tax-free package. Under-applied-to relative to ADB and the World Bank.",src:"isdb.org → careers"},
+ elig:"Verify age and experience rules. Indonesia is a major member country.",pay:4,pres:3,fit:3,phd:2,
+ prep:"Tax-free package. Under-applied-to relative to ADB and the World Bank.",src:"isdb.org → careers"},
 {id:"jpal",pri:3,inst:"J-PAL Southeast Asia",role:"Research Associate",loc:"Jakarta (LPEM UI)",cat:"Research org",win:"Rolling",date:"2027-03-01",
- elig:"Eligible — the strongest methods match of any Jakarta option.",
- pay:1,pres:4,fit:5,phd:5,
- prep:"You have ruled this out on pay. Kept on the list because the PhD conversion is the best available and the methods match is exact. <strong>Reconsider only if the PhD route wins outright.</strong>",src:"povertyactionlab.org"},
+ elig:"Eligible — the strongest methods match of any Jakarta option.",pay:1,pres:4,fit:5,phd:5,
+ prep:"You have ruled this out on pay. Kept because the PhD conversion is the best available and the methods match is exact. <strong>Reconsider only if the PhD route wins outright.</strong>",src:"povertyactionlab.org"},
 {id:"platform",pri:3,inst:"Platform economics",role:"Economist / data scientist — GoTo, Grab, Sea",loc:"Jakarta / Singapore",cat:"Private",win:"Rolling",date:"2027-02-01",
- elig:"Eligible. Your GenAI-and-labour work is directly on theme.",
- pay:5,pres:2,fit:3,phd:1,
+ elig:"Eligible. Your GenAI-and-labour work is directly on theme.",pay:5,pres:2,fit:3,phd:1,
  prep:"Highest cash of any realistic option. Almost no development prestige and a negligible PhD signal. <strong>This is the pure-income answer.</strong>",src:"Company career pages"},
 {id:"csis",pri:3,inst:"CSIS Indonesia",role:"Researcher — Economics",loc:"Jakarta",cat:"Think tank",win:"Rolling",date:"2027-03-01",
- elig:"Eligible, though their economics work leans macro and trade rather than firm-level micro.",
- pay:2,pres:4,fit:3,phd:3,
- prep:"An internship route also exists: 10–16 weeks, apply at least a month before your intended start. Compensation is not stated.",src:"csis.or.id/careers"},
+ elig:"Eligible, though their economics work leans macro and trade rather than firm-level micro.",pay:2,pres:4,fit:3,phd:3,
+ prep:"An internship route also exists: 10–16 weeks, apply at least a month before your start. Compensation not stated.",src:"csis.or.id/careers"},
 {id:"kapsarc",pri:3,inst:"KAPSARC",role:"Research associate — energy economics",loc:"Riyadh",cat:"Think tank",win:"Rolling",date:"2027-03-01",
- elig:"Possible if you can angle toward energy. Your GSID work on green hydrogen helps.",
- pay:5,pres:3,fit:3,phd:3,prep:"Tax-free and high-paying. Requires a field pivot.",src:"kapsarc.org"},
+ elig:"Possible if you can angle toward energy. Your GSID work on green hydrogen helps.",pay:5,pres:3,fit:3,phd:3,
+ prep:"Tax-free and high-paying. Requires a field pivot.",src:"kapsarc.org"},
 {id:"wbintern",pri:3,inst:"World Bank",role:"Internship Program (bridge)",loc:"Washington DC",cat:"MDB",win:"Applications ~Dec 2026",date:"2026-12-15",
- elig:"Eligible as a fallback bridge after March 2027.",
- pay:2,pres:5,fit:4,phd:3,
+ elig:"Eligible as a fallback bridge after March 2027.",pay:2,pres:5,fit:4,phd:3,
  prep:"Use only if nothing else lands. Confirms the World Bank relationship for a later YPP attempt.",src:"worldbank.org/internship"},
 {id:"indef",pri:3,inst:"INDEF",role:"Peneliti",loc:"Jakarta",cat:"Think tank",win:"Rolling",date:"2027-05-01",
  elig:"Easily eligible.",pay:1,pres:2,fit:2,phd:1,
- prep:"Listed for completeness. Media-first, thin research infrastructure, lowest pay. Below your level given five lead-authored papers.",src:"indef.or.id"}
-];
+ prep:"Listed for completeness. Media-first, thin research infrastructure, lowest pay. Below your level given five lead-authored papers.",src:"indef.or.id"}];
 
 const TIME=[
-{m:"Aug 2026",k:"2026-08",a:"Prepare the World Bank YPP package. Draft the 250-word stream statement and both 400-word essays yourself.",b:"Rewrite the CV in your own words from the template. Fill the three placeholders: GenAI paper units, geospatial tool, GitHub link.",c:"Email Dr Rachita Gulati at ADBI to reconnect and request a reference. Now, not in 2027.",d:"Request the GSID enrolment letter confirming March 2027 completion. University admin is slow in August."},
+{m:"Aug 2026",k:"2026-08",a:"Prepare the World Bank YPP package. Draft the 250-word stream statement and both 400-word essays yourself.",b:"Rewrite the CV in your own words. Fill the three placeholders: GenAI paper units, geospatial tool, GitHub link.",c:"Email Dr Rachita Gulati at ADBI to reconnect and request a reference. Now, not in 2027.",d:"Request the GSID enrolment letter confirming March 2027 completion. Admin is slow in August."},
 {m:"Sep 2026",k:"2026-09",a:"Submit the World Bank YPP. Portal 1–30 Sep, closes 23:59 UTC on the 30th.",b:"Publish a replication package on GitHub for the IJSE paper.",c:"Message Nilaphy Phommachanh at ADBI and Takahiro Yamada at RIETI.",d:"Verify the IMF RAP opening date on the IMF Workday portal."},
-{m:"Oct 2026",k:"2026-10",a:"Economic consulting graduate cycle opens. Start scanning PREDOC.org and EconJobMarket weekly.",b:"Enrol in a real analysis or econometric theory course that produces a transcript. Highest-return single action available to you.",c:"Contact Harry Aginta at Bank Indonesia about PCPM and BI's PhD sponsorship policy.",d:"WB YPP longlisting runs 1–15 Oct. Nothing to do but watch."},
-{m:"Nov 2026",k:"2026-11",a:"IMF RAP window (verify). Position methods ahead of the degree label.",b:"Push the GenAI-and-labour paper toward acceptance. One more publication beats every certificate.",c:"Contact Ven Seyhah at CDRI and Octasiano Valerio Mendoza — closest research overlaps.",d:"Confirm post-graduation visa options with the Nagoya international office."},
-{m:"Dec 2026",k:"2026-12",a:"World Bank Internship applications. Begin watching for the AIIB Graduate Program.",b:"Submit a paper to the ERIA Discussion Paper Series so you are ERIA-published before you apply there.",c:"WB YPP assessments may begin — prepare for a possible interview.",d:"Start gathering penyetaraan ijazah requirements for Ditjen Diktiristek."},
+{m:"Oct 2026",k:"2026-10",a:"Economic consulting graduate cycle opens. Scan PREDOC.org and EconJobMarket weekly.",b:"Enrol in a real analysis or econometric theory course that produces a transcript. Highest-return action available to you.",c:"Contact Harry Aginta at Bank Indonesia about PCPM and BI's PhD sponsorship policy.",d:"WB YPP longlisting runs 1–15 Oct. Nothing to do but watch."},
+{m:"Nov 2026",k:"2026-11",a:"IMF RAP window (verify). Position methods ahead of the degree label.",b:"Push the GenAI-and-labour paper toward acceptance. One publication beats every certificate.",c:"Contact Ven Seyhah at CDRI and Octasiano Valerio Mendoza — closest research overlaps.",d:"Confirm post-graduation visa options with the Nagoya international office."},
+{m:"Dec 2026",k:"2026-12",a:"World Bank Internship applications. Begin watching for the AIIB Graduate Program.",b:"Submit a paper to the ERIA Discussion Paper Series so you are ERIA-published before applying there.",c:"WB YPP assessments may begin — prepare for a possible interview.",d:"Start gathering penyetaraan ijazah requirements for Ditjen Diktiristek."},
 {m:"Jan 2027",k:"2027-01",a:"AIIB Graduate Program. ADBI Research Associate cycle. ERIA application.",b:"Submit a conference abstract: IRSA, JADE, or the Asian Development Review conference.",c:"Ask Prof. Okada for a reference letter while you are still his student.",d:"Thesis pressure begins — protect writing time."},
-{m:"Feb 2027",k:"2027-02",a:"AIIB deadline. Follow up with ERIA if there is no reply after three weeks.",b:"Finish the thesis. Convert one chapter into a submittable paper.",c:"Reconnect with Natsuki Kondo and Emmanuel Estrellado on campus — free practice conversations.",d:"Confirm which offers can accommodate an April or May 2027 start."},
+{m:"Feb 2027",k:"2027-02",a:"AIIB deadline. Follow up with ERIA if no reply after three weeks.",b:"Finish the thesis. Convert one chapter into a submittable paper.",c:"Reconnect with Natsuki Kondo and Emmanuel Estrellado on campus.",d:"Confirm which offers can accommodate an April or May 2027 start."},
 {m:"Mar 2027",k:"2027-03",a:"Decision point on any live offers.",b:"Graduate. Update the CV with the conferred degree and final GPA.",c:"Send a graduation update to every warm contact — a legitimate reason to reopen conversations.",d:"Start penyetaraan ijazah immediately. It gates the Bank Indonesia application."},
-{m:"Apr–Jun 2027",k:"2027-04",a:"World Bank Jakarta STC/ETC, Prospera, ERIA, platform economics — all rolling.",b:"Present at a conference. Keep at least one paper in the review pipeline.",c:"If you are in Jakarta, attend INDEF, CSIS and LPEM public seminars. Visibility is cheap here.",d:"Resolve visa and residency. Marriage planning — see PhD Routes for spouse work rights."},
+{m:"Apr–Jun 2027",k:"2027-04",a:"World Bank Jakarta STC/ETC, Prospera, ERIA, platform economics — all rolling.",b:"Present at a conference. Keep a paper in the review pipeline.",c:"If in Jakarta, attend INDEF, CSIS and LPEM seminars. Visibility is cheap here.",d:"Resolve visa and residency. Marriage planning — see PhD Routes for spouse work rights."},
 {m:"Jul 2027",k:"2027-07",a:"Final preparation for Bank Indonesia PCPM.",b:"Confirm the math coursework transcript is in hand.",c:"Ask Aginta for specific PCPM selection advice.",d:"Verify penyetaraan ijazah is complete. Without it you cannot apply."},
-{m:"Aug–Sep 2027",k:"2027-08",a:"Bank Indonesia PCPM — one shot, you age out after this. Also a second World Bank YPP attempt if the first failed.",b:"Maintain publication momentum.",c:"—",d:"PCPM selection is multi-stage and long. Clear your calendar."},
-{m:"Oct–Dec 2027",k:"2027-10",a:"ADB YPP (~Oct). PhD applications open for 2028 entry.",b:"Assemble PhD materials: writing sample, statement, three letters.",c:"Lock in referees: Okada, Gulati, plus one from wherever you are working.",d:"Decide — accept an offer, or commit to the PhD route."}
-];
+{m:"Aug–Sep 2027",k:"2027-08",a:"Bank Indonesia PCPM — one shot, you age out after this. Also a second WB YPP attempt if the first failed.",b:"Maintain publication momentum.",c:"—",d:"PCPM selection is multi-stage and long. Clear your calendar."},
+{m:"Oct–Dec 2027",k:"2027-10",a:"ADB YPP (~Oct). PhD applications open for 2028 entry.",b:"Assemble PhD materials: writing sample, statement, three letters.",c:"Lock in referees: Okada, Gulati, plus one from wherever you are working.",d:"Decide — accept an offer, or commit to the PhD route."}];
 
 const GAPS=[
 {n:1,g:"No formal mathematics sequence",w:"Your bachelor's is International Relations. IMF RAP lists quantitative bachelor's fields, and economics PhD committees screen on real analysis, linear algebra and probability before they read your papers. Five publications do not answer the question they are asking, which is whether you can survive first-year theory.",f:"Enrol in real analysis and econometric theory courses that produce a transcript, not a MOOC certificate. Also target European development and applied economics programmes — Tilburg, Erasmus, Groningen, Wageningen, IDS, Manchester — which weight research experience more heavily.",by:"Start Oct 2026",st:"Open"},
-{n:2,g:"Three papers still under review",w:"Under review converts to nothing if it never lands. Publications are the one asset where you outperform every peer — but only once they are accepted.",f:"Push the GenAI-and-labour paper hardest; it is your most distinctive. Name target journals on the CV. One acceptance beats every certification available to you.",by:"Ongoing",st:"Open"},
-{n:3,g:"No conference presentations",w:"Think tanks and PhD committees use conferences to check you can defend work in a room. Currently absent from your CV.",f:"Submit abstracts to IRSA, JADE, the Asian Development Review conference, ADBI events. One line, disproportionate credibility.",by:"Jan–Jun 2027",st:"Open"},
-{n:4,g:"Geospatial skill invisible",w:"You published nighttime-lights work but list no Google Earth Engine, QGIS or ArcGIS. It is scarce and differentiating, and your CV hides it.",f:"Add the actual tool — only if accurate. If someone else did the raster processing, learn it. Takahiro Yamada lists exactly this stack.",by:"Aug 2026",st:"Open"},
+{n:2,g:"Three papers still under review",w:"Under review converts to nothing if it never lands. Publications are the one asset where you outperform every peer — but only once accepted.",f:"Push the GenAI-and-labour paper hardest; it is your most distinctive. Name target journals on the CV.",by:"Ongoing",st:"Open"},
+{n:3,g:"No conference presentations",w:"Think tanks and PhD committees use conferences to check you can defend work in a room. Currently absent from your CV.",f:"Submit abstracts to IRSA, JADE, the Asian Development Review conference, ADBI events.",by:"Jan–Jun 2027",st:"Open"},
+{n:4,g:"Geospatial skill invisible",w:"You published nighttime-lights work but list no Google Earth Engine, QGIS or ArcGIS. It is scarce and differentiating, and your CV hides it.",f:"Add the actual tool — only if accurate. If someone else did the raster processing, learn it.",by:"Aug 2026",st:"Open"},
 {n:5,g:"No public code or replication",w:"For a quantitative candidate, a replication package is cheap, high-signal proof.",f:"Publish a GitHub repo for the IJSE paper. Replace the bit.ly link with a legible one.",by:"Sep 2026",st:"Open"},
 {n:6,g:"Penyetaraan ijazah not started",w:"A hard gate on the Bank Indonesia application. Foreign degree holders must supply Ditjen Diktiristek equivalency and GPA conversion, and it takes months.",f:"Begin the week you graduate in March 2027. Must be complete before August 2027.",by:"Mar–Jul 2027",st:"Open"},
-{n:7,g:"Post-graduation visa status in Japan",w:"The ADBI Research Associate role requires you to already reside in Japan with valid work permission. Your student status ends after March 2027.",f:"Consult the Nagoya international office about job-hunting or work status conversion well before graduation.",by:"Nov 2026",st:"Open"},
-{n:8,g:"No academic referee outside GSID",w:"PhD committees and pre-doc programmes want letters from people they recognise. You have Okada and Gulati.",f:"A pre-doctoral RA post solves this structurally. Failing that, build a genuine relationship with one external co-author.",by:"2027",st:"Open"},
-{n:9,g:"Japanese at N3",w:"Blocks the Japan-domestic career track — JICA, JETRO, MRI and Koei generally want N2 or above.",f:"Only worth investing in if Japan-based employment becomes the priority. Not binding for IMF, World Bank, AIIB or ERIA.",by:"Optional",st:"Open"},
+{n:7,g:"Post-graduation visa status in Japan",w:"The ADBI role requires you to already reside in Japan with valid work permission. Your student status ends after March 2027.",f:"Consult the Nagoya international office about status conversion well before graduation.",by:"Nov 2026",st:"Open"},
+{n:8,g:"No academic referee outside GSID",w:"PhD committees and pre-doc programmes want letters from people they recognise. You have Okada and Gulati.",f:"A pre-doctoral RA post solves this structurally. Failing that, build a relationship with one external co-author.",by:"2027",st:"Open"},
+{n:9,g:"Japanese at N3",w:"Blocks the Japan-domestic track — JICA, JETRO, MRI and Koei generally want N2 or above.",f:"Only worth investing in if Japan-based employment becomes the priority. Not binding for IMF, WB, AIIB or ERIA.",by:"Optional",st:"Open"},
 {n:10,g:"CV metric inflation",w:"A percentage on every bullet reads as manufactured to recruiters trained to distrust unverifiable numbers.",f:"Fixed in the rewritten CV. Keep only metrics with a real denominator.",by:"Done",st:"Closed"},
-{n:11,g:"'3+ years' overstated",w:"June 2021 to Dec 2023 is 2 years 7 months and overlaps your bachelor's. IO recruiters do the arithmetic.",f:"Fixed. Present the Cietra dates honestly and state the employment basis — it also protects your YPP experience count.",by:"Done",st:"Closed"}
-];
+{n:11,g:"'3+ years' overstated",w:"June 2021 to Dec 2023 is 2 years 7 months and overlaps your bachelor's. IO recruiters do the arithmetic.",f:"Fixed. Present the Cietra dates honestly and state the employment basis.",by:"Done",st:"Closed"}];
 
 const PHD=[
 {r:"Netherlands — employed PhD",tone:"good",get:"University employee, not a student. CAO-NU scale roughly €2,618–3,333/month gross, plus an 8% holiday allowance and 8.3% year-end allowance, pension, full benefits, no tuition.",sp:"Free access to the Dutch labour market. Partners of a scientific researcher or highly skilled migrant may work for any employer or self-employed with no separate permit — the card reads <em>arbeid vrij toegestaan, TWV niet vereist</em>. Her rights are broader than yours: you are limited to your contract, she is not.",t:"Apply 2027 for 2028 entry",o:"None",risk:"Severe housing shortage; rentals typically want 3× rent proof plus 1–3 months deposit. Family reunification takes 4–8 months, needs ~18 m² per person and sponsor income of at least €24,174/yr, which you clear.",v:"Best option if she moves"},
@@ -340,8 +332,7 @@ const PHD=[
 {r:"LPDP (Indonesia)",tone:"",get:"Full funding: tuition, monthly living allowance, settlement allowance, health insurance, spouse and child visa costs, dissertation research up to Rp100m, conference up to Rp15m, publication up to Rp25m.",sp:"Family allowance for up to two members at 25% of your monthly living allowance each. Doctoral awardees may bring family from the start of study under the 2024 rules. Not available at master's level.",t:"2027 cycles",o:"Return service to Indonesia",risk:"The return obligation constrains a World Bank or ADB career afterwards. And check how the host university would register you — see the trap above.",v:"Good if returning home"},
 {r:"Bank Indonesia sponsorship",tone:"",get:"BI funds staff doctorates abroad; salary continues.",sp:"Depends on destination country and permit type.",t:"After 2–3 years at BI, so ~2030",o:"Ikatan dinas plus post-PhD service",risk:"The PhD happens on BI's timeline, not yours. Longest total lock-in of any route.",v:"Safest financially, least free"},
 {r:"Japan (MEXT / JSPS)",tone:"bad",get:"You are already here; supervisor network intact; no relocation.",sp:"Weakest option for her. The dependent visa (<em>kazoku taizai</em>) caps spouse work at 28 hours per week even with permission.",t:"Could start 2027",o:"None",risk:"On the axis you care about — her career — Japan is clearly worse than an employed Dutch PhD, and it is not close.",v:"Only if she stays in Indonesia"},
-{r:"United Kingdom",tone:"",get:"Studentships vary; often stipend-based rather than employment.",sp:"Varies by visa route — verify carefully.",t:"Apply 2027 for 2028",o:"None",risk:"Stipends typically below Dutch employed-PhD pay; high cost of living.",v:"Check case by case"}
-];
+{r:"United Kingdom",tone:"",get:"Studentships vary; often stipend-based rather than employment.",sp:"Varies by visa route — verify carefully.",t:"Apply 2027 for 2028",o:"None",risk:"Stipends typically below Dutch employed-PhD pay; high cost of living.",v:"Check case by case"}];
 
 const NET=[
 {id:"n1",pri:1,name:"YAMADA Takahiro",prog:"DID 2013",now:"Fellow, RIETI. Ex-World Bank, ex-MOF Japan, ex-JICA economist.",why:"Closest methodological match available: spatial analysis, applied econometrics, ArcGIS Pro, STATA, Google Earth Engine — exactly your luminosity work. He can tell you whether your job-market paper reads as World Bank material.",route:"sites.google.com/view/takahiroyamadswebsite"},
@@ -358,105 +349,207 @@ const NET=[
 {id:"n12",pri:3,name:"PANTHI Pradeep",prog:"DID 2016",now:"Research Fellow, Policy Research Institute.",why:"Think tank research fellow route.",route:"LinkedIn"},
 {id:"n13",pri:3,name:"FAZAALLOH Al Muizzuddin",prog:"DIDC 2019",now:"Assistant Professor, Universitas Brawijaya.",why:"Indonesian cluster. Co-authorship potential on firm-level Indonesian work.",route:"University page"},
 {id:"n14",pri:3,name:"WIRYAWAN Bangkit Aditya",prog:"DIDC 2018",now:"Lecturer, Diponegoro University.",why:"Co-authors with Aginta. Indonesian applied economics network.",route:"University page"},
-{id:"n15",pri:3,name:"PESTALOZZI Zico Efraindio",prog:"DIDC 2022",now:"Project Associate, IOM Indonesia.",why:"Recent graduate, Indonesia-based, easiest cold outreach among the UN-system contacts.",route:"LinkedIn"}
-];
+{id:"n15",pri:3,name:"PESTALOZZI Zico Efraindio",prog:"DIDC 2022",now:"Project Associate, IOM Indonesia.",why:"Recent graduate, Indonesia-based, easiest cold outreach among the UN-system contacts.",route:"LinkedIn"}];
 
 const OPP_ST=["Not started","Preparing","Submitted","Interview","Offer","Rejected","Passed"];
 const NET_ST=["Not contacted","Emailed","Replied","Call booked","Ongoing","Cold"];
 const GAP_ST=["Open","In progress","Closed"];
 
-/* ============================ STATE ============================ */
-const KEY="careergates.v1";
-let S={opps:{},net:{},gaps:{}};
-try{const raw=localStorage.getItem(KEY); if(raw) S=Object.assign(S,JSON.parse(raw));}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){toast("Could not save — storage blocked");}}
-function oppSt(id){return (S.opps[id]&&S.opps[id].st)||"Not started"}
-function oppNote(id){return (S.opps[id]&&S.opps[id].note)||""}
-function setOpp(id,k,v){S.opps[id]=S.opps[id]||{};S.opps[id][k]=v;save()}
-function netSt(id){return S.net[id]||"Not contacted"}
-function gapSt(n){return S.gaps[n]|| GAPS.find(g=>g.n===n).st}
+/* ==================== STATE ==================== */
+const LKEY="careergates.v2";
+let ITEMS={};                    // id -> record
+let MODE="local";                // local | cloud
+let UID=null, fb=null;
 
 const TODAY=new Date(); TODAY.setHours(0,0,0,0);
-function days(d){return Math.round((new Date(d+"T00:00:00")-TODAY)/864e5)}
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
-function toast(m){const t=document.getElementById("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("on"),1900)}
-
 document.getElementById("today").textContent=TODAY.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+const $=id=>document.getElementById(id);
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function days(d){return Math.round((new Date(d+"T00:00:00")-TODAY)/864e5)}
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove("on"),1800)}
+function get(id){return ITEMS[id]||{}}
+function uid(){return "c"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+const OPEN=new Set();            // which detail panels are expanded
+function op(k){return OPEN.has(k)?" open":""}
 
-/* ============================ GATE BOARD ============================ */
+function loadLocal(){try{ITEMS=JSON.parse(localStorage.getItem(LKEY))||{}}catch(e){ITEMS={}}}
+function saveLocal(){try{localStorage.setItem(LKEY,JSON.stringify(ITEMS))}catch(e){toast("Storage blocked — export a backup")}}
+
+const pending={};
+function put(id,patch){
+  ITEMS[id]=Object.assign({},ITEMS[id],patch,{updatedAt:Date.now()});
+  if(MODE==="cloud"&&UID){
+    clearTimeout(pending[id]);
+    pending[id]=setTimeout(async()=>{
+      try{ await fb.setDoc(fb.doc(fb.db,"users",UID,"items",id), ITEMS[id], {merge:true}); setSync("ok","Synced"); }
+      catch(e){ setSync("warn","Saved offline — will sync when back online"); }
+    },500);
+  }else saveLocal();
+}
+function drop(id){
+  delete ITEMS[id];
+  if(MODE==="cloud"&&UID){fb.deleteDoc(fb.doc(fb.db,"users",UID,"items",id)).catch(()=>{})}
+  else saveLocal();
+}
+
+function setSync(kind,txt){
+  const d=$("dot"); d.className="dot "+(kind||"");
+  $("syncTxt").textContent=txt;
+}
+
+/* ==================== FIREBASE ==================== */
+async function initFirebase(){
+  const cfg=window.FIREBASE_CONFIG;
+  if(!cfg||!cfg.apiKey||String(cfg.apiKey).indexOf("PASTE")===0){
+    setSync("","Local mode — this browser only"); $("btnAuth").hidden=true;
+    $("footNote").textContent="Local mode. Data lives in this browser only. Export backups, or connect Firebase to sync across devices.";
+    $("modeName").textContent="local"; return;
+  }
+  if(location.protocol==="file:"){
+    setSync("warn","Local mode — Firebase needs a served page, not file://");
+    $("footNote").textContent="Firebase config found, but file:// blocks module loading. Serve the folder over http to enable sync.";
+    $("modeName").textContent="local (file:// blocks Firebase)"; return;
+  }
+  try{
+    const V="https://www.gstatic.com/firebasejs/10.12.2/";
+    const [A,U,F]=await Promise.all([import(V+"firebase-app.js"),import(V+"firebase-auth.js"),import(V+"firebase-firestore.js")]);
+    const app=A.initializeApp(cfg);
+    const auth=U.getAuth(app), db=F.getFirestore(app);
+    try{ await F.enableIndexedDbPersistence(db); }catch(e){}
+    fb={auth,db,doc:F.doc,setDoc:F.setDoc,deleteDoc:F.deleteDoc,collection:F.collection,onSnapshot:F.onSnapshot,
+        U,signOut:U.signOut};
+    MODE="cloud"; $("modeName").textContent="cloud (Firebase)";
+    setSync("warn","Not signed in");
+    $("btnAuth").hidden=false;
+
+    U.onAuthStateChanged(auth,user=>{
+      if(user){
+        UID=user.uid;
+        $("who").textContent=user.email||user.displayName||"signed in";
+        $("btnAuth").hidden=true; $("btnOut").hidden=false;
+        setSync("ok","Syncing");
+        $("footNote").textContent="Synced to your Firebase project. Edits appear on every signed-in device.";
+        fb.onSnapshot(fb.collection(db,"users",UID,"items"),snap=>{
+          const next={}; snap.forEach(d=>next[d.id]=d.data()); ITEMS=next; renderAll(); setSync("ok","Synced");
+        },err=>{ setSync("off","Sync error — check Firestore rules"); });
+      }else{
+        UID=null; $("who").textContent=""; $("btnAuth").hidden=false; $("btnOut").hidden=true;
+        setSync("warn","Not signed in — using this browser only");
+        loadLocal(); renderAll();
+      }
+    });
+  }catch(e){
+    setSync("off","Firebase failed to load — local mode");
+    $("footNote").textContent="Could not load Firebase ("+e.message+"). Running locally.";
+    loadLocal(); renderAll();
+  }
+}
+
+/* auth dialog */
+$("btnHelp").onclick=()=>$("dlgHelp").showModal();
+$("hClose").onclick=()=>$("dlgHelp").close();
+$("btnAuth").onclick=()=>$("dlgAuth").showModal();
+$("gClose").onclick=()=>$("dlgAuth").close();
+function authErr(m){const e=$("aErr");e.textContent=m;e.classList.add("on")}
+$("gGoogle").onclick=async()=>{try{await fb.U.signInWithPopup(fb.auth,new fb.U.GoogleAuthProvider());$("dlgAuth").close()}catch(e){authErr(e.code||e.message)}};
+$("gIn").onclick=async()=>{try{await fb.U.signInWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e.code||e.message)}};
+$("gUp").onclick=async()=>{try{await fb.U.createUserWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e.code||e.message)}};
+$("btnOut").onclick=()=>fb.signOut(fb.auth);
+
+/* ==================== RENDER ==================== */
+function effDate(o){const r=get("opp:"+o.id); return (r.deadline)||o.date}
+
 function renderGates(){
   const ids=["wbypp","imfrap","aiib","bipcpm"];
-  document.getElementById("gates").innerHTML=ids.map(id=>{
-    const o=OPPS.find(x=>x.id===id), d=days(o.date), past=d<0;
-    const tone = past?"t-mute": d<60?"t-rose": d<180?"t-amber":"t-teal";
-    const tag  = o.oneshot?"one shot": past?"closed": d<60?"urgent":"open";
+  $("gates").innerHTML=ids.map(id=>{
+    const o=OPPS.find(x=>x.id===id); if(!o) return "";
+    const d=days(effDate(o)), past=d<0;
+    const tone=past?"t-mute":d<60?"t-rose":d<180?"t-amber":"t-teal";
+    const tag=o.oneshot?"one shot":past?"closed":d<60?"urgent":"open";
     return `<div class="gate ${o.oneshot?"oneshot":""} ${past?"closed":""}">
       <span class="tag ${o.oneshot?"t-rose":tone}">${tag}</span>
-      <div class="gate-name">${esc(o.inst)}</div>
-      <div class="gate-when">${esc(o.win)}</div>
-      <div class="gate-count">
-        <span class="gate-num ${tone}">${past?"—":d}</span>
-        <span class="gate-unit">${past?"window passed":"days"}</span>
-      </div></div>`;
+      <div class="gate-name">${esc(o.inst)}</div><div class="gate-when">${esc(o.win)}</div>
+      <div class="gate-count"><span class="gate-num ${tone}">${past?"—":d}</span>
+      <span class="gate-unit">${past?"window passed":"days"}</span></div></div>`;
   }).join("");
 }
 
-/* ============================ TABS ============================ */
-const TABS=[["opps","Opportunities",OPPS.length],["time","Timeline",TIME.length],
-            ["gaps","Profile gaps",GAPS.length],["phd","PhD routes",PHD.length],["net","Network",NET.length]];
-document.getElementById("tabs").innerHTML=TABS.map(([k,l,n],i)=>
-  `<button role="tab" data-t="${k}" aria-selected="${i===0}">${l}<span class="cnt">${n}</span></button>`).join("");
-document.getElementById("tabs").addEventListener("click",e=>{
+const TABS=[["opps","Opportunities"],["time","Timeline"],["gaps","Profile gaps"],["phd","PhD routes"],["net","Network"]];
+$("tabs").innerHTML=TABS.map(([k,l],i)=>`<button role="tab" data-t="${k}" aria-selected="${i===0}">${l}<span class="cnt" id="cnt-${k}"></span></button>`).join("");
+$("tabs").addEventListener("click",e=>{
   const b=e.target.closest("button[data-t]"); if(!b) return;
   document.querySelectorAll("#tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
   document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id==="p-"+b.dataset.t));
-  document.getElementById("tools").style.display = (b.dataset.t==="opps"||b.dataset.t==="net")?"flex":"none";
+  const t=b.dataset.t;
+  $("tools").style.display=(t==="opps"||t==="net")?"flex":"none";
+  $("btnAdd").style.display=t==="opps"?"":"none";
+  $("fst").style.display=t==="opps"?"":"none";
 });
+OPP_ST.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;$("fst").appendChild(o)});
 
-const fst=document.getElementById("fst");
-OPP_ST.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;fst.appendChild(o)});
+function allOpps(){
+  const custom=Object.keys(ITEMS).filter(k=>k.startsWith("custom:")).map(k=>Object.assign({id:k.slice(7),custom:true,cat:"Added by you",elig:"",prep:"",src:"",pay:"–",pres:"–",fit:"–",phd:"–"},ITEMS[k]));
+  return OPPS.concat(custom);
+}
+function key(o){return o.custom?("custom:"+o.id):("opp:"+o.id)}
 
-/* ============================ PANELS ============================ */
+function fieldRow(k,label,val,type,ph){
+  return `<div class="f"><label>${label}</label><input type="${type||"text"}" data-f="${k}" value="${esc(val)}" placeholder="${esc(ph||"")}"></div>`;
+}
+
 function renderOpps(){
-  const q=document.getElementById("q").value.toLowerCase();
-  const fp=document.getElementById("fpri").value, fs=fst.value;
-  const html=OPPS.filter(o=>{
-    if(fp && String(o.pri)!==fp) return false;
-    if(fs && oppSt(o.id)!==fs) return false;
-    if(q && !(o.inst+o.role+o.loc+o.cat+o.prep+oppNote(o.id)).toLowerCase().includes(q)) return false;
+  const q=$("q").value.toLowerCase(), fp=$("fpri").value, fs=$("fst").value, hide=$("fhide").checked;
+  const list=allOpps().filter(o=>{
+    const r=get(key(o));
+    if(fp&&String(o.pri)!==fp) return false;
+    if(fs&&(r.status||"Not started")!==fs) return false;
+    if(hide&&r.done) return false;
+    if(q&&!((o.inst+o.role+o.loc+o.cat+(o.prep||"")+(r.note||"")+(r.contact||"")+(r.email||"")).toLowerCase().includes(q))) return false;
     return true;
-  }).sort((a,b)=>a.pri-b.pri||days(a.date)-days(b.date)).map(o=>{
-    const d=days(o.date), st=oppSt(o.id);
-    const cls = d<0?"d-past": d<60?"d-now": d<200?"d-soon":"d-far";
-    const done=["Rejected","Passed","Offer"].includes(st);
-    return `<article class="card p${o.pri} ${done?"done":""}">
-      <div class="c-top">
-        <div><h3 class="c-title">${esc(o.inst)}</h3><div class="c-role">${esc(o.role)}</div></div>
-        <span class="days ${cls}">${d<0?"window passed":d+" days"}</span>
-      </div>
-      <div class="c-meta"><span>${esc(o.loc)}</span><span>${esc(o.cat)}</span><span>Window <b>${esc(o.win)}</b></span><span>Verify at <b>${esc(o.src)}</b></span></div>
-      <div class="c-elig">${esc(o.elig)}</div>
-      <div class="c-body">${o.prep}</div>
-      <div class="scores">
-        <span class="score">pay <i>${o.pay}</i></span><span class="score">prestige <i>${o.pres}</i></span>
-        <span class="score">research fit <i>${o.fit}</i></span><span class="score">phd value <i>${o.phd}</i></span>
-      </div>
-      <div class="c-ctl">
-        <select data-opp="${o.id}">${OPP_ST.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select>
-        <textarea data-note="${o.id}" placeholder="Notes, contact names, submission date…">${esc(oppNote(o.id))}</textarea>
-      </div></article>`;
-  }).join("");
-  document.getElementById("p-opps").innerHTML =
-    `<div class="note"><b>Reminder.</b> Scores are 1–5 against your own stated priorities, not objective rankings. Every date needs re-verifying at the source — institutions move their cycles.</div>`+
-    (html||`<div class="note">Nothing matches those filters.</div>`);
+  }).sort((a,b)=>(a.pri-b.pri)||(days(effDate(a))-days(effDate(b))));
+  $("cnt-opps").textContent=list.length;
+
+  $("p-opps").innerHTML=
+    `<div class="note"><b>Reminder.</b> Scores are 1–5 against your own stated priorities, not objective rankings. Re-verify every date at the source — institutions move their cycles.</div>`+
+    (list.map(o=>{
+      const k=key(o), r=get(k), d=days(effDate(o)), st=r.status||"Not started";
+      const cls=d<0?"d-past":d<60?"d-now":d<200?"d-soon":"d-far";
+      return `<article class="card p${o.pri} ${r.done?"done":""}" data-k="${k}">
+        <div class="c-top">
+          <div><h3 class="c-title">${esc(o.inst)}</h3><div class="c-role">${esc(o.role)}</div></div>
+          <span class="days ${cls}">${d<0?"window passed":d+" days"}${r.deadline?" ·":""}${r.deadline?'<span class="edited"> edited</span>':""}</span>
+        </div>
+        <div class="c-meta"><span>${esc(o.loc)}</span><span>${esc(o.cat)}</span>
+          ${o.win?`<span>Window <b>${esc(o.win)}</b></span>`:""}
+          ${o.src?`<span>Verify at <b>${esc(o.src)}</b></span>`:""}
+          ${r.link?`<span><a href="${esc(r.link)}" target="_blank" rel="noopener">Open portal ↗</a></span>`:""}
+          ${r.email?`<span><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></span>`:""}</div>
+        ${o.elig?`<div class="c-elig">${esc(o.elig)}</div>`:""}
+        ${o.prep?`<div class="c-body">${o.prep}</div>`:""}
+        ${o.custom?"":`<div class="scores"><span class="score">pay <i>${o.pay}</i></span><span class="score">prestige <i>${o.pres}</i></span><span class="score">research fit <i>${o.fit}</i></span><span class="score">phd value <i>${o.phd}</i></span></div>`}
+        <div class="c-ctl">
+          <select data-f="status">${OPP_ST.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select>
+          <label class="chk"><input type="checkbox" data-f="done" ${r.done?"checked":""}> Done</label>
+          ${o.custom?`<span class="spacer"></span><button class="act warn" data-del="${k}">Delete</button>`:""}
+        </div>
+        <details class="more"${op(k)}><summary>Details, contact and notes</summary>
+          <div class="fields">
+            ${fieldRow("deadline","Deadline (overrides default)",r.deadline||"","date")}
+            ${fieldRow("link","Application link",r.link||"","url","https://")}
+            ${fieldRow("contact","Contact name",r.contact||"","text")}
+            ${fieldRow("email","Contact email",r.email||"","email")}
+            <div class="f fw"><label>Notes</label><textarea data-f="note" placeholder="What you sent, when, who replied, what to do next…">${esc(r.note||"")}</textarea></div>
+          </div>
+        </details></article>`;
+    }).join("")||`<div class="note">Nothing matches those filters.</div>`);
 }
 
 function renderTime(){
   const nowKey=TODAY.toISOString().slice(0,7);
-  document.getElementById("p-time").innerHTML=`<div class="tl">`+TIME.map(t=>{
-    const state = t.k<nowKey?"past": t.k.slice(0,7)===nowKey?"now":"";
-    return `<div class="tl-item ${state}">
-      <div class="tl-mo">${esc(t.m)}${state==="now"?" · you are here":""}</div>
+  $("cnt-time").textContent=TIME.length;
+  $("p-time").innerHTML=`<div class="tl">`+TIME.map(t=>{
+    const state=t.k<nowKey?"past":t.k===nowKey?"now":"";
+    return `<div class="tl-item ${state}"><div class="tl-mo">${esc(t.m)}${state==="now"?" · you are here":""}</div>
       <div class="tl-grid">
         <div class="tl-cell"><div class="tl-k">Applications</div><div class="tl-v">${esc(t.a)}</div></div>
         <div class="tl-cell"><div class="tl-k">Profile building</div><div class="tl-v">${esc(t.b)}</div></div>
@@ -467,85 +560,126 @@ function renderTime(){
 }
 
 function renderGaps(){
-  document.getElementById("p-gaps").innerHTML=
-   `<div class="note"><b>Read gap 1 first.</b> It is the single item blocking you at both the IMF and every economics PhD committee, and it is the slowest to fix.</div>`+
+  $("cnt-gaps").textContent=GAPS.filter(g=>(get("gap:"+g.n).status||g.st)!=="Closed").length+"/"+GAPS.length;
+  $("p-gaps").innerHTML=`<div class="note alert"><b>Read gap 1 first.</b> It is the single item blocking you at both the IMF and every economics PhD committee, and it is the slowest to fix.</div>`+
    GAPS.map(g=>{
-    const st=gapSt(g.n), closed=st==="Closed";
-    return `<article class="card ${g.n<=3?"p1":"p3"} ${closed?"done":""}">
-      <div class="c-top"><div><h3 class="c-title">${g.n}. ${esc(g.g)}</h3></div>
-      <span class="days ${closed?"d-past":"d-soon"}">${esc(g.by)}</span></div>
+    const k="gap:"+g.n, r=get(k), st=r.status||g.st, closed=st==="Closed";
+    return `<article class="card ${g.n<=3?"p1":"p3"} ${closed?"done":""}" data-k="${k}">
+      <div class="c-top"><div><h3 class="c-title">${g.n}. ${esc(g.g)}</h3></div><span class="days ${closed?"d-past":"d-soon"}">${esc(g.by)}</span></div>
       <div class="c-body"><strong>Why it costs you.</strong> ${esc(g.w)}</div>
       <div class="c-body"><strong>The fix.</strong> ${esc(g.f)}</div>
-      <div class="c-ctl"><select data-gap="${g.n}">${GAP_ST.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select></div>
+      <div class="c-ctl"><select data-f="status">${GAP_ST.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select></div>
+      <details class="more"${op(k)}><summary>Notes</summary><div class="fields"><div class="f fw"><textarea data-f="note" placeholder="Progress, course names, dates…">${esc(r.note||"")}</textarea></div></div></details>
     </article>`;
   }).join("");
 }
 
 function renderPhd(){
-  document.getElementById("p-phd").innerHTML=
-   `<div class="note"><b>The decisive variable is permit type, not country.</b> In the Netherlands the same degree gives your wife opposite outcomes depending on whether you are employed or on a study permit. Get it confirmed in writing by the university's HR before accepting anything.</div>
-    <table class="rt"><thead><tr><th style="width:15%">Route</th><th style="width:20%">What you receive</th><th style="width:24%">Spouse work rights</th><th style="width:11%">Timing</th><th style="width:11%">Obligation</th><th style="width:19%">Risk</th></tr></thead><tbody>`+
+  $("cnt-phd").textContent=PHD.length;
+  $("p-phd").innerHTML=`<div class="note alert"><b>The decisive variable is permit type, not country.</b> In the Netherlands the same degree gives your wife opposite outcomes depending on whether you are employed or on a study permit. Get it confirmed in writing by the university's HR before accepting anything.</div>
+   <table class="rt"><thead><tr><th style="width:15%">Route</th><th style="width:20%">What you receive</th><th style="width:24%">Spouse work rights</th><th style="width:11%">Timing</th><th style="width:11%">Obligation</th><th style="width:19%">Risk</th></tr></thead><tbody>`+
    PHD.map(p=>`<tr class="${p.tone}"><td>${esc(p.r)}<div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.08em">${esc(p.v)}</div></td>
-     <td>${esc(p.get)}</td><td>${p.sp}</td><td>${esc(p.t)}</td><td>${esc(p.o)}</td><td>${p.risk}</td></tr>`).join("")+
-   `</tbody></table>`;
+     <td>${esc(p.get)}</td><td>${p.sp}</td><td>${esc(p.t)}</td><td>${esc(p.o)}</td><td>${p.risk}</td></tr>`).join("")+`</tbody></table>`;
 }
 
 function renderNet(){
-  const q=document.getElementById("q").value.toLowerCase();
-  const fp=document.getElementById("fpri").value;
-  const html=NET.filter(n=>{
-    if(fp && String(n.pri)!==fp) return false;
-    if(q && !(n.name+n.now+n.why+n.prog).toLowerCase().includes(q)) return false;
+  const q=$("q").value.toLowerCase(), fp=$("fpri").value, hide=$("fhide").checked;
+  const list=NET.filter(n=>{
+    const r=get("net:"+n.id);
+    if(fp&&String(n.pri)!==fp) return false;
+    if(hide&&r.done) return false;
+    if(q&&!((n.name+n.now+n.why+n.prog+(r.note||"")+(r.email||"")).toLowerCase().includes(q))) return false;
     return true;
-  }).map(n=>{
-    const st=netSt(n.id);
-    return `<article class="card p${n.pri} ${st==="Cold"?"done":""}">
-      <div class="c-top"><div><h3 class="c-title">${esc(n.name)}</h3><div class="c-role">${esc(n.now)}</div></div>
-      <span class="days d-far">${esc(n.prog)}</span></div>
+  });
+  $("cnt-net").textContent=list.length;
+  $("p-net").innerHTML=`<div class="note"><b>The directories are from 2025.</b> Verify anyone's current role before you write to them — half these records were already stale when published.</div>`+
+   (list.map(n=>{
+    const k="net:"+n.id, r=get(k), st=r.status||"Not contacted";
+    return `<article class="card p${n.pri} ${r.done?"done":""}" data-k="${k}">
+      <div class="c-top"><div><h3 class="c-title">${esc(n.name)}</h3><div class="c-role">${esc(n.now)}</div></div><span class="days d-far">${esc(n.prog)}</span></div>
       <div class="c-body">${esc(n.why)}</div>
-      <div class="c-meta"><span>Route in <b>${esc(n.route)}</b></span></div>
-      <div class="c-ctl"><select data-net="${n.id}">${NET_ST.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select></div>
-    </article>`;
-  }).join("");
-  document.getElementById("p-net").innerHTML =
-    `<div class="note"><b>The directories are from 2025.</b> Verify anyone's current role before you write to them — half these records were already stale when the list was published.</div>`+
-    (html||`<div class="note">Nothing matches those filters.</div>`);
+      <div class="c-meta"><span>Route in <b>${esc(n.route)}</b></span>${r.email?`<span><a href="mailto:${esc(r.email)}">${esc(r.email)}</a></span>`:""}${r.link?`<span><a href="${esc(r.link)}" target="_blank" rel="noopener">Profile ↗</a></span>`:""}</div>
+      <div class="c-ctl"><select data-f="status">${NET_ST.map(s=>`<option ${s===st?"selected":""}>${s}</option>`).join("")}</select>
+      <label class="chk"><input type="checkbox" data-f="done" ${r.done?"checked":""}> Done</label></div>
+      <details class="more"${op(k)}><summary>Contact details and notes</summary><div class="fields">
+        ${fieldRow("email","Email",r.email||"","email")}
+        ${fieldRow("link","Profile link",r.link||"","url","https://")}
+        ${fieldRow("deadline","Follow up on","date")}
+        <div class="f fw"><label>Notes</label><textarea data-f="note" placeholder="What you asked, what they said, next step…">${esc(r.note||"")}</textarea></div>
+      </div></details></article>`;
+   }).join("")||`<div class="note">Nothing matches those filters.</div>`);
 }
 
-/* ============================ EVENTS ============================ */
+function renderAll(){renderGates();renderOpps();renderTime();renderGaps();renderPhd();renderNet()}
+
+/* ==================== EVENTS ==================== */
+document.body.addEventListener("toggle",e=>{
+  const d=e.target; if(!d.classList||!d.classList.contains("more")) return;
+  const c=d.closest("[data-k]"); if(!c) return;
+  d.open?OPEN.add(c.dataset.k):OPEN.delete(c.dataset.k);
+},true);
+
+// Only these fields change layout, ordering or filtering, so only these force a redraw.
+const REDRAW=["status","done","deadline"];
 document.body.addEventListener("change",e=>{
-  const t=e.target;
-  if(t.dataset.opp){setOpp(t.dataset.opp,"st",t.value);renderOpps();toast("Status saved")}
-  if(t.dataset.net){S.net[t.dataset.net]=t.value;save();renderNet();toast("Status saved")}
-  if(t.dataset.gap){S.gaps[t.dataset.gap]=t.value;save();renderGaps();toast("Status saved")}
+  const t=e.target, card=t.closest("[data-k]"); if(!card||!t.dataset.f) return;
+  const v=t.type==="checkbox"?t.checked:t.value;
+  put(card.dataset.k,{[t.dataset.f]:v});
+  if(REDRAW.includes(t.dataset.f)) renderAll();
+  toast("Saved");
 });
 document.body.addEventListener("input",e=>{
-  if(e.target.dataset.note){clearTimeout(window._n);window._n=setTimeout(()=>{setOpp(e.target.dataset.note,"note",e.target.value);toast("Note saved")},600)}
+  const t=e.target, card=t.closest("[data-k]"); if(!card||!t.dataset.f) return;
+  if(t.tagName!=="TEXTAREA"&&t.type!=="text"&&t.type!=="email"&&t.type!=="url") return;
+  clearTimeout(t._d); t._d=setTimeout(()=>{put(card.dataset.k,{[t.dataset.f]:t.value});toast("Saved")},700);
 });
-["q","fpri","fst"].forEach(id=>document.getElementById(id).addEventListener("input",()=>{renderOpps();renderNet()}));
+document.body.addEventListener("click",e=>{
+  const b=e.target.closest("[data-del]"); if(!b) return;
+  if(confirm("Delete this item?")){drop(b.dataset.del);renderAll();toast("Deleted")}
+});
+["q","fpri","fst"].forEach(id=>$(id).addEventListener("input",()=>{renderOpps();renderNet()}));
+$("fhide").addEventListener("change",()=>{renderOpps();renderNet()});
 
-document.getElementById("exp").onclick=()=>{
-  const blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="career-gates-backup-"+TODAY.toISOString().slice(0,10)+".json";
-  a.click(); URL.revokeObjectURL(a.href); toast("Backup downloaded");
-};
-document.getElementById("impBtn").onclick=()=>document.getElementById("imp").click();
-document.getElementById("imp").onchange=e=>{
-  const f=e.target.files[0]; if(!f) return;
-  const r=new FileReader();
-  r.onload=()=>{try{S=Object.assign({opps:{},net:{},gaps:{}},JSON.parse(r.result));save();renderAll();toast("Backup restored")}
-               catch(err){toast("That file could not be read")}};
-  r.readAsText(f);
-};
-document.getElementById("rst").onclick=()=>{
-  if(confirm("Clear every status and note? Export a backup first if you want to keep them.")){
-    S={opps:{},net:{},gaps:{}};save();renderAll();toast("Cleared");}
+$("btnAdd").onclick=()=>$("dlgAdd").showModal();
+$("nClose").onclick=()=>$("dlgAdd").close();
+$("nSave").onclick=()=>{
+  const inst=$("nInst").value.trim(); if(!inst){toast("Give it a name first");return}
+  put("custom:"+uid(),{inst,role:$("nRole").value.trim(),loc:$("nLoc").value.trim(),
+    date:$("nDate").value||"2027-12-31",pri:Number($("nPri").value),win:"",status:"Not started",done:false});
+  ["nInst","nRole","nLoc","nDate"].forEach(i=>$(i).value="");
+  $("dlgAdd").close(); renderAll(); toast("Added");
 };
 
-function renderAll(){renderGates();renderOpps();renderTime();renderGaps();renderPhd();renderNet()}
-renderAll();
+$("exp").onclick=()=>{
+  const blob=new Blob([JSON.stringify(ITEMS,null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);
+  a.download="career-gates-"+TODAY.toISOString().slice(0,10)+".json";a.click();
+  URL.revokeObjectURL(a.href);toast("Backup downloaded");
+};
+$("impBtn").onclick=()=>$("imp").click();
+$("imp").onchange=ev=>{
+  const f=ev.target.files[0]; if(!f) return;
+  const rd=new FileReader();
+  rd.onload=async()=>{
+    try{
+      const data=JSON.parse(rd.result);
+      if(MODE==="cloud"&&UID){for(const k in data){await fb.setDoc(fb.doc(fb.db,"users",UID,"items",k),data[k],{merge:true})}}
+      else{ITEMS=Object.assign(ITEMS,data);saveLocal();renderAll()}
+      toast("Backup restored");
+    }catch(err){toast("That file could not be read")}
+  };
+  rd.readAsText(f);
+};
+$("rst").onclick=async()=>{
+  if(!confirm("Clear every status, note and contact? Export a backup first if you want to keep them.")) return;
+  if(MODE==="cloud"&&UID){for(const k of Object.keys(ITEMS)){await fb.deleteDoc(fb.doc(fb.db,"users",UID,"items",k)).catch(()=>{})}}
+  ITEMS={}; saveLocal(); renderAll(); toast("Cleared");
+};
+
+window.addEventListener("online",()=>{if(MODE==="cloud"&&UID)setSync("ok","Synced")});
+window.addEventListener("offline",()=>setSync("warn","Offline — changes queued"));
+
+loadLocal(); renderAll(); initFirebase();
 </script>
 </body>
 </html>
