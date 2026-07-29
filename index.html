@@ -26,6 +26,9 @@ a{color:var(--amber)}:focus-visible{outline:2px solid var(--amber);outline-offse
 .dot.warn{background:var(--amber)}
 .dot.off{background:var(--rose)}
 .syncbar .who{color:var(--paper)}
+#migrate{background:#3A2E1A;border-bottom:1px solid var(--amber)}
+.mig{display:flex;align-items:center;gap:12px;padding:9px 20px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--paper)}
+.mig-t b{color:var(--amber)}
 .syncbar .spacer{flex:1}
 .mini{background:transparent;border:1px solid var(--line);color:var(--muted);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:3px;cursor:pointer}
 .mini:hover{color:var(--paper);border-color:var(--muted)}
@@ -157,6 +160,13 @@ dialog::backdrop{background:rgba(6,12,20,.72)}
   <button class="mini pri" id="btnAuth" hidden>Sign in to sync</button>
   <button class="mini" id="btnOut" hidden>Sign out</button>
   <button class="mini" id="btnHelp">Setup</button>
+</div></div>
+
+<div id="migrate" hidden><div class="wrap mig">
+  <span class="mig-t">Found <b id="migN">0</b> item(s) saved in this browser that are not in your account yet.</span>
+  <span class="spacer"></span>
+  <button class="mini pri" id="migGo">Upload to my account</button>
+  <button class="mini" id="migNo">Ignore</button>
 </div></div>
 
 <header class="mast"><div class="wrap"><div class="mast-in">
@@ -507,8 +517,9 @@ async function initFirebase(){
     $("footNote").textContent="Synced to your Firebase project. Edits appear on every signed-in device.";
 
     try{
-      await fb.getDocs(fb.collection(db,"users",UID,"items"));
-      dset("db","ok","read succeeded");
+      const snap0=await fb.getDocs(fb.collection(db,"users",UID,"items"));
+      dset("db","ok","read succeeded · "+snap0.size+" item(s) in your account");
+      offerMigration(snap0.size);
     }catch(e){
       const c=e.code||e.message;
       dset("db","no",c, c.indexOf("permission")>-1
@@ -563,6 +574,38 @@ $("gGoogle").onclick=async()=>{try{await fb.U.signInWithPopup(fb.auth,new fb.U.G
 $("gIn").onclick=async()=>{try{await fb.U.signInWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e)}};
 $("gUp").onclick=async()=>{try{await fb.U.createUserWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e)}};
 $("btnOut").onclick=()=>fb.signOut(fb.auth);
+
+/* Local data entered before sign-in is not automatically in the cloud.
+   Offer to upload it rather than silently losing it. */
+function localPending(){
+  let raw={}; try{raw=JSON.parse(localStorage.getItem(LKEY))||{}}catch(e){}
+  const out={};
+  for(const k in raw){
+    const v=raw[k]||{};
+    const meaningful=(v.note&&v.note.trim())||v.link||v.contact||v.email||v.deadline||v.done||
+                     (v.status&&v.status!=="Not started"&&v.status!=="Not contacted"&&v.status!=="Open")||k.startsWith("custom:");
+    if(meaningful) out[k]=v;
+  }
+  return out;
+}
+function offerMigration(){
+  const pend=localPending(), n=Object.keys(pend).length;
+  if(!n||sessionStorage.getItem("mig.skip")){document.getElementById("migrate").hidden=true;return}
+  document.getElementById("migN").textContent=n;
+  document.getElementById("migrate").hidden=false;
+  document.getElementById("migGo").onclick=async()=>{
+    document.getElementById("migGo").textContent="Uploading…";
+    try{
+      for(const k in pend){ await fb.setDoc(fb.doc(fb.db,"users",UID,"items",k),pend[k],{merge:true}); }
+      document.getElementById("migrate").hidden=true;
+      toast("Uploaded — now visible on every signed-in device");
+    }catch(e){ toast("Upload failed: "+(e.code||e.message)); document.getElementById("migGo").textContent="Retry upload"; }
+  };
+  document.getElementById("migNo").onclick=()=>{
+    sessionStorage.setItem("mig.skip","1");
+    document.getElementById("migrate").hidden=true;
+  };
+}
 
 /* ==================== RENDER ==================== */
 function effDate(o){const r=get("opp:"+o.id); return (r.deadline)||o.date}
