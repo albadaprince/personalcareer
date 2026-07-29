@@ -247,7 +247,24 @@ dialog::backdrop{background:rgba(6,12,20,.72)}
   </div>
 </div></dialog>
 
-<script src="firebase-config.js" onerror="window.__noCfg=1"></script>
+<!-- ============================================================
+     PASTE YOUR FIREBASE KEYS HERE
+     Firebase console -> Project settings (gear) -> General
+     -> Your apps -> Web app -> SDK setup and configuration -> Config
+     These are not secrets. They ship in every Firebase site's source.
+     ============================================================ -->
+<script>
+window.FIREBASE_CONFIG = {
+ apiKey: "AIzaSyBUJzWOYlbZ6tyT3VButwdqTGpVMlW52qQ",
+  authDomain: "private-4102b.firebaseapp.com",
+  projectId: "private-4102b",
+  storageBucket: "private-4102b.firebasestorage.app",
+  messagingSenderId: "668082070392",
+  appId: "1:668082070392:web:b92407e68dbe825d9a1e8d",
+  measurementId: "G-6JSX3ELN7Y"
+};
+</script>
+
 <script>
 /* ==================== SEED DATA ==================== */
 const OPPS=[
@@ -421,7 +438,7 @@ function setSync(kind,txt){
 const DIAG={};
 function dset(k,state,val,fix){DIAG[k]={state,val,fix};renderDiag()}
 const DIAG_ORDER=[
- ["host","Page origin"],["proto","Protocol"],["cfg","firebase-config.js"],
+ ["host","Page origin"],["proto","Protocol"],["cfg","Config block"],
  ["keys","Config values"],["sdk","Firebase SDK"],["auth","Authentication"],
  ["user","Signed in as"],["db","Firestore read/write"]];
 function renderDiag(){
@@ -448,9 +465,9 @@ async function initFirebase(){
        served?"":"Firebase cannot load from file://. Serve the folder over http, or use your Netlify URL.");
 
   if(!cfg){
-    dset("cfg","no","not loaded — window.FIREBASE_CONFIG is undefined",
-      "The browser could not fetch firebase-config.js. Most often it was never committed: check <code>git ls-files</code> includes it, and that .gitignore does not exclude it. Open "+location.origin+"/firebase-config.js directly — if you get a 404, that is the whole problem.");
-    setSync("","Local mode — config file not found");
+    dset("cfg","no","window.FIREBASE_CONFIG is undefined",
+      "The config block near the top of index.html is missing or broken. Open index.html, find PASTE_YOUR_API_KEY, and check the block above it is intact.");
+    setSync("","Local mode — no config found");
     $("btnAuth").hidden=true;
     $("footNote").textContent="firebase-config.js did not load. Data is saving to this browser only.";
     $("modeName").textContent="local"; return;
