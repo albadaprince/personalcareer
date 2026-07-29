@@ -134,6 +134,14 @@ dialog::backdrop{background:rgba(6,12,20,.72)}
 .dlg .row{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .err{color:var(--rose);font-size:12px;font-family:var(--mono);margin-top:9px;display:none}
 .err.on{display:block}
+.dg{font-family:var(--mono);font-size:11.5px;line-height:1.5;margin:4px 0 10px}
+.dg .r{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.dg .r:last-child{border-bottom:0}
+.dg .ic{flex:none;width:14px;font-weight:600}
+.dg .ok{color:var(--teal)}.dg .no{color:var(--rose)}.dg .wa{color:var(--amber)}.dg .na{color:var(--muted)}
+.dg .lb{flex:none;width:132px;color:var(--muted)}
+.dg .vl{flex:1;color:var(--paper);word-break:break-word}
+.dg .fx{color:var(--amber);display:block;margin-top:3px;font-family:var(--body);font-size:12px;line-height:1.45}
 @media(max-width:900px){.gates{grid-template-columns:repeat(2,1fr)}.tl-grid{grid-template-columns:1fr}.rt{display:block;overflow-x:auto}}
 @media(max-width:560px){.gates{grid-template-columns:1fr}.clock{text-align:left}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -218,13 +226,15 @@ dialog::backdrop{background:rgba(6,12,20,.72)}
 </div></dialog>
 
 <dialog id="dlgHelp"><div class="dlg">
-  <h2>Connecting Firebase</h2>
-  <p>Right now this page is running in <b id="modeName">local</b> mode.</p>
-  <div style="font-size:13px;color:#C9D2DC;line-height:1.6">
-    <p style="color:#C9D2DC">To sync across devices, create a free Firebase project, enable <b>Firestore</b> and <b>Authentication</b>, then copy your web config into <code>firebase-config.js</code> beside this file. Full steps are in the README.</p>
-    <p style="color:#C9D2DC"><b>Firebase needs a real server.</b> Opening this file directly from your hard drive (<code>file://</code>) blocks the module loader, so it will always fall back to local mode. Use GitHub Pages, Netlify, or run <code>python3 -m http.server</code> in the folder.</p>
+  <h2>Firebase diagnostics</h2>
+  <p>Running in <b id="modeName">local</b> mode. Each check below runs live.</p>
+  <div id="diag"></div>
+  <div class="row">
+    <button class="act go" id="hRetest">Re-run checks</button>
+    <button class="act" id="hCopy">Copy report</button>
+    <span class="spacer"></span>
+    <button class="act" id="hClose">Close</button>
   </div>
-  <div class="row"><span class="spacer"></span><button class="act" id="hClose">Close</button></div>
 </div></dialog>
 
 <script src="firebase-config.js" onerror="window.__noCfg=1"></script>
@@ -398,62 +408,160 @@ function setSync(kind,txt){
 }
 
 /* ==================== FIREBASE ==================== */
+const DIAG={};
+function dset(k,state,val,fix){DIAG[k]={state,val,fix};renderDiag()}
+const DIAG_ORDER=[
+ ["host","Page origin"],["proto","Protocol"],["cfg","firebase-config.js"],
+ ["keys","Config values"],["sdk","Firebase SDK"],["auth","Authentication"],
+ ["user","Signed in as"],["db","Firestore read/write"]];
+function renderDiag(){
+  const el=document.getElementById("diag"); if(!el) return;
+  const ico={ok:["ok","OK"],no:["no","X"],wa:["wa","!"],na:["na","–"]};
+  el.className="dg";
+  el.innerHTML=DIAG_ORDER.map(([k,label])=>{
+    const d=DIAG[k]||{state:"na",val:"not reached yet"};
+    const [c,g]=ico[d.state]||ico.na;
+    return `<div class="r"><span class="ic ${c}">${g}</span><span class="lb">${label}</span>
+      <span class="vl">${esc(d.val)}${d.fix?`<span class="fx">${d.fix}</span>`:""}</span></div>`;
+  }).join("");
+}
+function diagText(){
+  return DIAG_ORDER.map(([k,l])=>{const d=DIAG[k]||{state:"na",val:"-"};
+    return `[${(d.state||"na").toUpperCase()}] ${l}: ${d.val}`}).join("\n");
+}
+
 async function initFirebase(){
   const cfg=window.FIREBASE_CONFIG;
-  if(!cfg||!cfg.apiKey||String(cfg.apiKey).indexOf("PASTE")===0){
-    setSync("","Local mode — this browser only"); $("btnAuth").hidden=true;
-    $("footNote").textContent="Local mode. Data lives in this browser only. Export backups, or connect Firebase to sync across devices.";
+  dset("host","na",location.origin);
+  const served=location.protocol==="http:"||location.protocol==="https:";
+  dset("proto",served?"ok":"no",location.protocol,
+       served?"":"Firebase cannot load from file://. Serve the folder over http, or use your Netlify URL.");
+
+  if(!cfg){
+    dset("cfg","no","not loaded — window.FIREBASE_CONFIG is undefined",
+      "The browser could not fetch firebase-config.js. Most often it was never committed: check <code>git ls-files</code> includes it, and that .gitignore does not exclude it. Open "+location.origin+"/firebase-config.js directly — if you get a 404, that is the whole problem.");
+    setSync("","Local mode — config file not found");
+    $("btnAuth").hidden=true;
+    $("footNote").textContent="firebase-config.js did not load. Data is saving to this browser only.";
     $("modeName").textContent="local"; return;
   }
-  if(location.protocol==="file:"){
+  dset("cfg","ok","loaded");
+
+  const missing=["apiKey","authDomain","projectId","appId"].filter(k=>!cfg[k]);
+  const placeholder=String(cfg.apiKey||"").indexOf("PASTE")===0||String(cfg.projectId||"")==="your-project";
+  if(missing.length||placeholder){
+    dset("keys","no",placeholder?"still contains template placeholders":"missing: "+missing.join(", "),
+      "Paste the real values from Firebase console → Project settings → General → Your apps → Web.");
+    setSync("","Local mode — config not filled in");
+    $("btnAuth").hidden=true; $("modeName").textContent="local"; return;
+  }
+  dset("keys","ok","projectId: "+cfg.projectId+" · authDomain: "+cfg.authDomain);
+
+  if(!served){
     setSync("warn","Local mode — Firebase needs a served page, not file://");
-    $("footNote").textContent="Firebase config found, but file:// blocks module loading. Serve the folder over http to enable sync.";
+    $("footNote").textContent="Config is fine, but file:// blocks module loading.";
     $("modeName").textContent="local (file:// blocks Firebase)"; return;
   }
+
+  let A,U,F,auth,db;
   try{
     const V="https://www.gstatic.com/firebasejs/10.12.2/";
-    const [A,U,F]=await Promise.all([import(V+"firebase-app.js"),import(V+"firebase-auth.js"),import(V+"firebase-firestore.js")]);
-    const app=A.initializeApp(cfg);
-    const auth=U.getAuth(app), db=F.getFirestore(app);
-    try{ await F.enableIndexedDbPersistence(db); }catch(e){}
-    fb={auth,db,doc:F.doc,setDoc:F.setDoc,deleteDoc:F.deleteDoc,collection:F.collection,onSnapshot:F.onSnapshot,
-        U,signOut:U.signOut};
-    MODE="cloud"; $("modeName").textContent="cloud (Firebase)";
-    setSync("warn","Not signed in");
-    $("btnAuth").hidden=false;
-
-    U.onAuthStateChanged(auth,user=>{
-      if(user){
-        UID=user.uid;
-        $("who").textContent=user.email||user.displayName||"signed in";
-        $("btnAuth").hidden=true; $("btnOut").hidden=false;
-        setSync("ok","Syncing");
-        $("footNote").textContent="Synced to your Firebase project. Edits appear on every signed-in device.";
-        fb.onSnapshot(fb.collection(db,"users",UID,"items"),snap=>{
-          const next={}; snap.forEach(d=>next[d.id]=d.data()); ITEMS=next; renderAll(); setSync("ok","Synced");
-        },err=>{ setSync("off","Sync error — check Firestore rules"); });
-      }else{
-        UID=null; $("who").textContent=""; $("btnAuth").hidden=false; $("btnOut").hidden=true;
-        setSync("warn","Not signed in — using this browser only");
-        loadLocal(); renderAll();
-      }
-    });
+    [A,U,F]=await Promise.all([import(V+"firebase-app.js"),import(V+"firebase-auth.js"),import(V+"firebase-firestore.js")]);
+    dset("sdk","ok","v10.12.2 loaded");
   }catch(e){
-    setSync("off","Firebase failed to load — local mode");
-    $("footNote").textContent="Could not load Firebase ("+e.message+"). Running locally.";
-    loadLocal(); renderAll();
+    dset("sdk","no",e.message,
+      "The SDK could not download from gstatic.com. Usually a network block, an ad blocker, or a Content-Security-Policy header. If you added a _headers or netlify.toml CSP, it must allow https://www.gstatic.com.");
+    setSync("off","Firebase SDK blocked — local mode");
+    $("footNote").textContent="Could not load Firebase SDK. Running locally.";
+    loadLocal(); renderAll(); return;
   }
+
+  try{
+    const app=A.initializeApp(cfg);
+    auth=U.getAuth(app); db=F.getFirestore(app);
+    try{ await F.enableIndexedDbPersistence(db); }catch(e){}
+    fb={auth,db,doc:F.doc,setDoc:F.setDoc,deleteDoc:F.deleteDoc,collection:F.collection,
+        onSnapshot:F.onSnapshot,getDocs:F.getDocs,U,signOut:U.signOut};
+    MODE="cloud"; $("modeName").textContent="cloud (Firebase)";
+    dset("auth","ok","initialised");
+    dset("user","wa","not signed in yet","Click “Sign in to sync”. If the Google popup errors with auth/unauthorized-domain, add <b>"+location.hostname+"</b> in Firebase console → Authentication → Settings → Authorized domains.");
+    setSync("warn","Not signed in"); $("btnAuth").hidden=false;
+  }catch(e){
+    dset("auth","no",e.code||e.message,"Check the config values are from the right project.");
+    setSync("off","Firebase init failed"); loadLocal(); renderAll(); return;
+  }
+
+  U.onAuthStateChanged(auth,async user=>{
+    if(!user){
+      UID=null; $("who").textContent=""; $("btnAuth").hidden=false; $("btnOut").hidden=true;
+      dset("user","wa","not signed in","Click “Sign in to sync” in the top bar.");
+      dset("db","na","waiting for sign-in");
+      setSync("warn","Not signed in — using this browser only");
+      loadLocal(); renderAll(); return;
+    }
+    UID=user.uid;
+    $("who").textContent=user.email||user.displayName||"signed in";
+    $("btnAuth").hidden=true; $("btnOut").hidden=false;
+    dset("user","ok",(user.email||user.displayName||"anonymous")+" · uid "+user.uid);
+    setSync("ok","Syncing");
+    $("footNote").textContent="Synced to your Firebase project. Edits appear on every signed-in device.";
+
+    try{
+      await fb.getDocs(fb.collection(db,"users",UID,"items"));
+      dset("db","ok","read succeeded");
+    }catch(e){
+      const c=e.code||e.message;
+      dset("db","no",c, c.indexOf("permission")>-1
+        ? "Firestore rules are rejecting you. Paste the contents of firestore.rules into Firebase console → Firestore Database → Rules, then press Publish."
+        : (c.indexOf("unavailable")>-1||c.indexOf("not-found")>-1
+           ? "The Firestore database may not exist yet, or was created in Datastore mode. Create it in Native mode: Firebase console → Firestore Database → Create database."
+           : "Unexpected Firestore error."));
+      setSync("off","Firestore error — open Setup for details");
+      loadLocal(); renderAll(); return;
+    }
+
+    fb.onSnapshot(fb.collection(db,"users",UID,"items"),snap=>{
+      const next={}; snap.forEach(d=>next[d.id]=d.data()); ITEMS=next; renderAll(); setSync("ok","Synced");
+      dset("db","ok","live sync active · "+snap.size+" item(s)");
+    },err=>{
+      dset("db","no",err.code||err.message,"Publish the rules in firestore.rules, then reload.");
+      setSync("off","Sync error — open Setup for details");
+    });
+  });
 }
 
 /* auth dialog */
-$("btnHelp").onclick=()=>$("dlgHelp").showModal();
+$("btnHelp").onclick=()=>{renderDiag();$("dlgHelp").showModal()};
 $("hClose").onclick=()=>$("dlgHelp").close();
+$("hRetest").onclick=()=>{location.reload()};
+$("hCopy").onclick=async()=>{
+  try{await navigator.clipboard.writeText(diagText());toast("Report copied")}
+  catch(e){prompt("Copy this:",diagText())}
+};
 $("btnAuth").onclick=()=>$("dlgAuth").showModal();
 $("gClose").onclick=()=>$("dlgAuth").close();
-function authErr(m){const e=$("aErr");e.textContent=m;e.classList.add("on")}
-$("gGoogle").onclick=async()=>{try{await fb.U.signInWithPopup(fb.auth,new fb.U.GoogleAuthProvider());$("dlgAuth").close()}catch(e){authErr(e.code||e.message)}};
-$("gIn").onclick=async()=>{try{await fb.U.signInWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e.code||e.message)}};
-$("gUp").onclick=async()=>{try{await fb.U.createUserWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e.code||e.message)}};
+
+// Turn Firebase auth error codes into something actionable.
+const AUTH_FIX={
+ "auth/unauthorized-domain":"This domain is not authorised. Firebase console → Authentication → Settings → Authorized domains → Add domain → "+location.hostname,
+ "auth/operation-not-allowed":"That sign-in method is switched off. Firebase console → Authentication → Sign-in method → enable Google and/or Email/Password.",
+ "auth/popup-blocked":"Your browser blocked the popup. Allow popups for this site, or use the email and password fields below.",
+ "auth/popup-closed-by-user":"The popup was closed before finishing. Try again.",
+ "auth/configuration-not-found":"Authentication is not set up in this project yet. Firebase console → Authentication → Get started.",
+ "auth/invalid-api-key":"The apiKey in firebase-config.js is wrong. Re-copy it from Project settings → General → Your apps.",
+ "auth/invalid-credential":"Wrong email or password. If you have not made an account yet, use Create account.",
+ "auth/email-already-in-use":"That email already has an account here — use Sign in instead."
+};
+function authErr(e){
+  const code=e.code||e.message;
+  const el=$("aErr");
+  el.innerHTML=esc(code)+(AUTH_FIX[code]?'<span style="display:block;margin-top:6px;font-family:var(--body);font-size:12.5px;color:var(--paper)">'+AUTH_FIX[code]+"</span>":"");
+  el.classList.add("on");
+  dset("user","no",code,AUTH_FIX[code]||"");
+}
+$("gGoogle").onclick=async()=>{try{await fb.U.signInWithPopup(fb.auth,new fb.U.GoogleAuthProvider());$("dlgAuth").close()}catch(e){authErr(e)}};
+$("gIn").onclick=async()=>{try{await fb.U.signInWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e)}};
+$("gUp").onclick=async()=>{try{await fb.U.createUserWithEmailAndPassword(fb.auth,$("aEmail").value.trim(),$("aPass").value);$("dlgAuth").close()}catch(e){authErr(e)}};
 $("btnOut").onclick=()=>fb.signOut(fb.auth);
 
 /* ==================== RENDER ==================== */
